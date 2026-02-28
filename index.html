@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/style.css">
     <link rel="icon" type="image/svg+xml" href="./img/fav-icon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
     <title>Animation Webpage</title>
 </head>
 <body>
@@ -23,39 +27,76 @@
 
     <section class="hero">
        <h1 class="gradient-text">Open Source for GIFs and Stickers you love!</h1> 
+    
+       <div class="placeholder-images">
+            <img src="img/fish.png" alt="Placeholder 1">
+            <img src="img/octopus.png" alt="Placeholder 2">
+            <img src="img/whale.png" alt="Placeholder 3">
+        </div>
+
+        <p class="hero-description">
+            Explore a growing collection of beautifully crafted, lightweight GIFs and stickers ready to use in your creative projects.
+        </p>
     </section>
 
     <section class="offer">
-        <h1>How our GIFs and Stickers work</h1>
+        <h1>How Our GIFs & Stickers Work</h1>
         <div class="info-grid">
             <div class="info-card">
                 <h2>Infinite Scalability</h2>
-                <p>SVG images scale without quality loss. Perfect for any resolution and future-ready.</p>
+                <p>SVG images scale without quality loss, whether viewed on a mobile screen or a large monitor. This makes your visuals look crisp at any resolution and ensures they remain future-ready for new devices and displays.</p>
             </div>
             <div class="info-card">
                 <h2>Tiny File Size</h2>
-                <p>Optimized PNGs and SVGs ensure your pages stay fast.</p>
+                <p>Optimized PNGs and SVGs minimize file size, keeping your web pages fast and efficient. Smaller assets mean quicker load times, reduced bandwidth usage, and a better experience for your visitors.</p>
             </div>
             <div class="info-card">
                 <h2>Timeless Design</h2>
-                <p>Minimalist illustrations with shadows and layers for clean visuals.</p>
+                <p>Our minimalist illustrations feature thoughtful use of shadows and layers to create clean, elegant visuals. The designs are versatile, ensuring they stay appealing across trends and applications.</p>
             </div>
             <div class="info-card">
                 <h2>Free Usage</h2>
-                <p>Use it on personal or commercial projects. Just don’t copy our website.</p>
+                <p>Use these GIFs and stickers in personal or commercial projects at no cost. They’re perfect for websites, social media, or marketing campaigns, just remember not to replicate our website content directly.</p>
             </div>
             <div class="info-card">
                 <h2>Perfect Everywhere</h2>
-                <p>Websites, social posts, blogs, or banners—you choose!</p>
+                <p>Our assets fit seamlessly in any digital space—websites, social media posts, blogs, banners, or presentations. No matter where you place them, they maintain clarity, impact, and style.</p>
             </div>
         </div>
     </section>
-
     <section class="box-text">
-        <h3>About Our Website</h3>
-        <p>Our teacher, Tr.Su, gave the final assignment "Project Management By Using ERP". We made this site with 2 programmers and 1 animation artist, creating "Animation Website" to showcase our skills.</p>
+        <div class="box-content">
+            <div class="box-left">
+                <h3>About This Project</h3>
+                <p>
+                    This website was created as our final assignment for the course “Project Management Using ERP.” 
+                    Developed by a team of two programmers and one animation artist, the Animation Website 
+                    showcases our collaboration, technical skills, and creative design work.
+                </p>
+            </div>
+    
+            <div class="members">
+                <div class="member" data-name="Member">
+                    <a href="#" target="_blank">
+                        <img src="https://i.pravatar.cc/150?img=20" alt="Member">
+                    </a>
+                </div>
+            
+                <div class="member" data-name="Member">
+                    <a href="#">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="Member">
+                    </a>
+                </div>
+            
+                <div class="member" data-name="Member">
+                    <a href="#">
+                        <img src="https://i.pravatar.cc/150?img=45" alt="Member">
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
-
+<!-- 
     <section id="platform" class="platform">
         <h3>Contact Us</h3>
         <div class="icon-box">
@@ -69,21 +110,24 @@
                 <img src="/img/Viber.webp" alt="Viber" class="social-icon">
             </a>
         </div>
-    </section>
+    </section> -->
 
     <footer>
         <div class="footer-container">
-            <div class="footer-box">
-                <p>Programmer: Khant Naing Htun</p>
-                <p>Programmer: Naung Naung Lin</p>
-                <p>Artist: Saung Wai Hnin Htet</p>
-            </div>
             <div class="logobox">
-                <img src="/img/fav-icon.ico" alt="footer-logo" class="footer-logo">
+                <img src="/img/fav-icon.ico" alt="Company Logo" class="footer-logo">
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© animation.web by ILC BCS students</p>
+    
+            <div class="footer-links">
+                <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">
+                    <img src="/img/discord.svg" alt="Discord" class="social-icon">
+                </a>
+    
+                <a href="https://invite.viber.com/?g=ch5xK9wWHVb_WlMNXVJbRiPsJR-Mn6bx" target="_blank">
+                    <img src="/img/viber.svg" alt="Viber" class="social-icon">
+                </a>
+
+            </div>
         </div>
     </footer>
 
