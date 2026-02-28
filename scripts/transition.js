@@ -16,3 +16,12 @@ document.querySelectorAll("a").forEach(link => {
         }
     });
 });
+
+const faders = document.querySelectorAll('.fade-in');
+window.addEventListener('scroll', () => {
+  faders.forEach(fader => {
+    const top = fader.getBoundingClientRect().top;
+    const trigger = window.innerHeight - 100;
+    if(top < trigger) fader.classList.add('show');
+  });
+});

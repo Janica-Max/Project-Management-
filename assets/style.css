@@ -1,31 +1,91 @@
-html {
-  scroll-behavior: smooth;
+/* =============================
+   FONTS & ROOT COLORS
+============================= */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Poppins:wght@400;500&display=swap');
+
+:root {
+    --primary: #FF6EC7;      /* Cute pink */
+    --secondary: #6C63FF;    /* Soft violet */
+    --accent: #00FFE0;       /* Cyan accent */
+    --bg: #FFF8FB;           /* Light pastel background */
+    --card-bg: #FFFFFF;
+    --text: #333333;
+    --text-light: #666666;
 }
+
+/* =============================
+   BODY & DEFAULT FONT
+============================= */
 body {
-    opacity: 1;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    text-align: center;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+
+    background: linear-gradient(135deg, #9e5cca, #B5FFFC, #FFD1FF, #3f5585);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* =============================
+   HEADINGS
+============================= */
+h1, h2, h3 {
+    font-family: 'Baloo 2', 'Poppins', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.gradient-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #FF6EC7, #6C63FF, #00FFE0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* =============================
+   PARAGRAPH / BODY TEXT
+============================= */
+p, li, span, small {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6rem;
+    color: var(--text);
+}
+
+/* =============================
+   FADE TRANSITION
+============================= */
+body.fade-out {
+    opacity: 0;
     transition: opacity 0.4s ease-in-out;
 }
 
-body.fade-out {
-    opacity: 0;
-}
-
-.logo{
-    width: 70px;
-    height: 70px;
-    border-radius: 50px;
-    gap:20px;
-}
-/* Navbar */
+/* =============================
+   NAVBAR
+============================= */
 .navbar {
     display: flex;
     justify-content: center;
-    padding: 15px 50px;
-    background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 12px 20px;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-radius: 0 0 25px 25px;
+    margin-bottom: 140px;
 }
 
 .navdiv {
@@ -33,399 +93,451 @@ body.fade-out {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1500px;
+    max-width: 1400px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-logo a {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color:rgb(39, 88, 213);
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--primary);
     text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .navdiv ul {
     list-style: none;
     display: flex;
-    gap: 100px;
-    font-weight: bold;
+    gap: 35px;
+    font-weight: 600;
     font-size: 1rem;
-    font-family: 'Courier New', Courier, monospace;
     align-items: center;
+    padding-left: 0;
 }
 
 .navdiv ul li a {
     text-decoration: none;
     color: var(--text);
-    transition: 0.3s;
-}
-/* From Uiverse.io by xueyuantan */ 
-button {
- width: 9em;
- height: 3em;
- border-radius: 30em;
- font-size: 15px;
- font-family: inherit;
- font-weight: bold;
- border: none;
- position: relative;
- overflow: hidden;
- z-index: 1;
- box-shadow: 6px 6px 12px #c5c5c5,
-             -6px -6px 12px #ffffff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    background: transparent;
 }
 
-button::before {
- content: '';
- width: 0;
- height: 3em;
- border-radius: 30em;
- position: absolute;
- top: 0;
- left: 0;
- background-image: linear-gradient(to right, #3fa19f 0%, #238452 100%);
- transition: .5s ease;
- display: block;
- z-index: -1;
+.navdiv ul li a:hover {
+    color: #fff;
+    background: linear-gradient(135deg, #a7a7a7, #848484);
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-button:hover::before {
- width: 9em;
+.logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
 }
 
+/* =============================
+   STICKER BUTTON
+============================= */
+.cool-btn {
+    padding: 14px 36px;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6C63FF, #FF6EC7);
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cool-btn::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transform: skewX(-20deg);
+    transition: all 0.5s ease;
+}
+
+.cool-btn:hover::after {
+    left: 200%;
+}
+
+.cool-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* =============================
+   HERO / BOX SECTION
+============================= */
 .box {
-    font-size: larger;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.25rem;
     text-align: center;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
+    margin: 10rem auto 0 auto;
+    max-width: 1100px;
+}
 
-    margin: 12rem auto 0 auto;
-    max-width: 1000px;
-}
-body {
-    min-height: 100vh;
-    margin: 0;
-}
-.btn-center{
+.btn-center {
     display: flex;
-    justify-content: center; /* center button horizontally */
+    justify-content: center;
 }
 
-/* From Uiverse.io by cssbuttons-io */ 
-.fancy {
-    background-color: transparent;
-    border: 2px solid #000;
-    border-radius: 0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: inline-flex;     /* allow internal flex for keys/text */
+/* =============================
+   OFFER / INFO GRID
+============================= */
+.offer {
+    margin-top: 150px;
+}
+
+.offer h1 {
+    font-size: 2.4rem;
     font-weight: 700;
-    letter-spacing: 0.05em;
-    margin: 0;
-    outline: none;
-    overflow: visible;
-    padding: 1.25em 2em;
-    text-align: center;
-    text-decoration: none;
-    text-transform: none;
-    transition: all 0.3s ease-in-out;
-    user-select: none;
-    font-size: 13px;
-
-    position: relative;       /* removed absolute */
-    flex-direction: column;   /* stack text + button vertically */
-    align-items: center;      /* center horizontally */
+    margin-bottom: 10px;
+    color: var(--primary);
 }
 
-.fancy::before {
-    content: " ";
-    width: 1.5625rem;
-    height: 2px;
-    background: rgb(223, 14, 14);
-    top: 50%;
-    left: 1.5em;
-    position: absolute;
-    transform: translateY(-50%);
-    transform-origin: center;
-    transition: background 0.3s linear, width 0.3s linear;
-}
-
-.fancy .text {
-    font-size: 1.125em;
-    line-height: 1.33333em;
-    padding-left: 2em;
-    display: block;
-    text-align: left;
-    transition: all 0.3s ease-in-out;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: black;
-}
-.fancy:hover .text {
-    color: rgb(5, 202, 237);
-}
-
-.fancy .top-key {
-    height: 2px;
-    width: 1.5625rem;
-    top: -2px;
-    left: 0.625rem;
-    position: absolute;
-    background: #e8e8e8;
-    transition: width 0.5s ease-out, left 0.3s ease-out;
-}
-
-.fancy .bottom-key-1 {
-    height: 2px;
-    width: 1.5625rem;
-    right: 1.875rem;
-    bottom: -2px;
-    position: absolute;
-    background: #e8e8e8;
-    transition: width 0.5s ease-out, right 0.3s ease-out;
-}
-
-.fancy .bottom-key-2 {
-    height: 2px;
-    width: 0.625rem;
-    right: 0.625rem;
-    bottom: -2px;
-    position: absolute;
-    background: #e8e8e8;
-    transition: width 0.5s ease-out, right 0.3s ease-out;
-}
-
-.fancy:hover {
-    color: white;
-    background: black;
-}
-
-.fancy:hover::before {
-    width: 0.9375rem;
-    background: white;
-}
-
-
-.fancy:hover .top-key {
-    left: -2px;
-    width: 0px;
-}
-
-.fancy:hover .bottom-key-1,
-.fancy:hover .bottom-key-2 {
-    right: 0;
-    width: 0;
-}
-
-/* Offer text under button */
-.offer{
-    width: auto;
-    height: auto;
-    position: relative;
-    padding-top: 50px;
-}
-.offer h1{
-    text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 2rem;
-    position: relative; /
-}
-.inforow{
-    padding: 20px 20px;
-    padding-top: 60px;
-}
 .info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 40px;
+    padding: 40px 20px;
+    justify-items: center;
 }
+
+.info-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+.info-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+.info-card:nth-child(3) { grid-column: 3; grid-row: 1; }
+.info-card:nth-child(4) { grid-column: 1; grid-row: 2; }
+.info-card:nth-child(5) { grid-column: 2; grid-row: 2; }
 
 .info-card {
-  background: #edecec;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-.info-card:hover{
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
 }
 
-.info-card h3 {
-  font-size: 18px;
-  margin-bottom: 6px;
-  color: #333;
-  font-family: 'Courier New', Courier, monospace;
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+.info-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--secondary);
 }
 
 .info-card p {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    color: var(--text-light);
+    line-height: 1.6rem;
 }
-@media (min-width: 1200px) {
-  .info-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  /* Center the last card without resizing */
-  .info-card:last-child {
-    grid-column: 4/2;
-  }
-}
+
+/* =============================
+   BOX TEXT
+============================= */
 .box-text {
     display: block;
-    width: 1320px;
-    height: auto;
-    font-size: 1.5rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    position: relative;
-    top: 50px;   /*I can adjust this position*/
-    word-spacing: 10px;
-}
-.box-text h3{
-    font-size: 2.5rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    padding:20px;
-}
-/*Social Icon*/
-.platform{
-    text-align: center;
-    padding-top: 50px;
-}
-.platform h3{
-  font-size: 2.5rem;
-  font-family:Arial, Helvetica, sans-serif;
-  text-align:center;
-  padding-top:50px;
-}
-.icon-box {
-  height: 250px;
-  display: flex;
-  gap: 80px;                 
-  justify-content: center;   
-  align-items: center;       
-  flex-wrap: wrap;      
-  margin-top: -50px;     
+    width: 90%;
+    margin: 50px auto;
+    font-size: 1.2rem;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-radius: 25px;
+    background: linear-gradient(135deg, #FF6EC7, #FFF0F7, #6C63FF);
+    color: #333;
 }
 
-.social-icon{
-  width: 80px;
-  height: 80px;
-  border-radius: 30px;
-  object-fit: contain;
+.box-text h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
 }
+
+/* =============================
+   PLATFORM SOCIAL ICONS
+============================= */
+.platform h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary);
+    margin-bottom: 30px;
+}
+
+.icon-box {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+}
+
+/* =============================
+   FOOTER
+============================= */
 .footer-container {
     display: flex;
-    justify-content: space-between;  /* space between sections */
-    align-items: center;             /* vertical center */
-    padding: 20px 20px;
-    margin-top: 4rem;
-    background-color: #000000;
-    color: #ffffff;
-    flex-wrap: wrap;                 /* responsive */
-    
-}
-
-.footer-box {
-    padding: 20px;
-    background-color: #000;
-    line-height: 50px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.logobox {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 25px 40px;
+    margin-top: 4rem;
+    background-color: #333;
+    color: #fff;
+    flex-wrap: wrap;
+    border-radius: 25px 25px 0 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-box p {
+    margin: 5px 0;
+    color: #fff;
 }
 
 .footer-logo {
-    width: 80px;
-    height: 80px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
 }
-.footer-bottom{
-    display: flex;
-    justify-content: center;   /* center horizontally */
-    align-items: center;       /* center vertically */
-    color: rgb(255, 255, 255);
-    background-color: #000;
-    flex-wrap: wrap;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
 
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #333;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    font-family: 'Poppins', sans-serif;
 }
-/* ABOUT */
-.top{
-    font-size:1.3rem;
-    font-weight: bold;
-    text-align: left;
-    padding-left: 30px;
-    font-family: Arial, Helvetica, sans-serif;
+.footer-bottom p {
+    color: #FFFFFF;
 }
-.about-box{
+
+/* =============================
+   ABOUT BOX / VIDEOS
+============================= */
+.about-box {
     display: flex;
     flex-wrap: wrap;
-    padding: 20px 20px;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;   /* 👈 add this */
-}
-.file-text{
-    flex: 1;                     
-    max-width: 800px;
-    padding-left: 50px; 
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.file-text h2{
-    font-size: 2rem;
-    font-family:Arial, Helvetica, sans-serif;
-    color:rgb(131, 98, 49);
-}
-
-.file-text p{
-    font-size: 1.3rem;
-    line-height: 30px;
-}
-.file-text2{
-    flex:1;
-    max-width: 800px;
-    padding-right:50px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.file-text2 h2{
-    font-size: 2rem;
-    font-family:Arial, Helvetica, sans-serif;
-    color:rgb(12, 113, 156);
-}
-.file-text2 p{
-    font-size: 1.3rem;
-    line-height: 30px;
-}
-/*Video*/
-.about-box{
+    gap: 40px;
+    padding: 40px 20px;
     text-align: left;
-    padding:50px;
+}
+
+.file-text, .file-text2 {
+    flex: 1;
+    max-width: 800px;
+}
+
+.file-text h2, .file-text2 h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.file-text p, .file-text2 p {
+    font-size: 1.1rem;
+    line-height: 28px;
 }
 
 .file-video-box {
-    width: 100%;
-    max-width: 400px; /* adjust if needed */;
-    padding-top:50px;
+    flex: 1;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .file-video-box video {
     width: 100%;
     height: auto;
-    display: flex;
-    border-radius: 15px;
+    display: block;
+    border-radius: 20px;
+}
+
+/* =============================
+   SCROLL ANIMATION
+============================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =============================
+   TABLET MEDIA QUERIES
+============================= */
+@media (max-width: 1000px) {
+    .about-box {
+        flex-direction: column;
+        text-align: center;
+    }
+    .file-text, .file-text2, .file-video-box {
+        max-width: 100%;
+    }
+    .navdiv ul {
+        gap: 20px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+    }
+}
+
+/* =============================
+   MOBILE MEDIA QUERIES
+============================= */
+@media (max-width: 600px) {
+    /* Navbar adjustments */
+    .navdiv {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navdiv ul {
+        flex-direction: column;
+        gap: 15px;
+        padding-left: 0;
+    }
+
+    .navdiv ul li a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .cool-btn {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+
+    /* Hero text */
+    .gradient-text {
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        padding: 0 10px;
+    }
+
+    /* Info grid single column */
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .info-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .info-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-card p {
+        font-size: 0.95rem;
+    }
+
+    /* Box text */
+    .box-text {
+        font-size: 1rem;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .box-text h3 {
+        font-size: 1.5rem;
+    }
+
+    /* About / Video sections */
+    .about-box {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .file-text, .file-text2, .file-video-box {
+        max-width: 100%;
+    }
+
+    .file-text h2, .file-text2 h2 {
+        font-size: 1.5rem;
+    }
+
+    .file-text p, .file-text2 p {
+        font-size: 1rem;
+    }
+
+    .file-video-box {
+        max-width: 100%;
+    }
+
+    /* Platform icons */
+    .icon-box {
+        gap: 30px;
+    }
+
+    .social-icon {
+        width: 55px;
+        height: 55px;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        padding: 15px 20px;
+        border-radius: 0;
+        gap: 15px;
+    }
+
+    .footer-logo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .footer-bottom p {
+        font-size: 0.85rem;
+    }
 }
