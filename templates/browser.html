@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sticker Glory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+    <div class="nav-bar">
+
+        <!-- Mobile Menu Icon -->
+        <i class='bx bx-menu siderbarOpen'></i>
+
+        <!-- LOGO SECTION -->
+        <div class="logo">
+            <a href="/">
+                <img src="/static/images/fav-icon.ico" alt="Logo" class="site-logo">
+                <span class="site-name">Sticker Glory</span>
+            </a>
+        </div>
+
+        <!-- MENU -->
+        <div class="menu">
+            <div class="logo-toggle">
+                <span class="logo">
+                    <a href="/">Sticker Glory</a>
+                </span>
+                <i class='bx bx-x siderbarClose'></i>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+
+        <!-- DARK MODE + SEARCH -->
+        <div class="darkLight-searchBox">
+
+            <!-- Dark Mode -->
+            <div class="dark-light">
+                <i class='bx bx-moon moon'></i>
+                <i class='bx bx-sun sun'></i>
+            </div>
+
+            <!-- Search -->
+            <div class="searchBox">
+                <div class="searchToggle">
+                    <i class='bx bx-x cancel'></i>
+                    <i class='bx bx-search search'></i>
+                </div>
+
+                <div class="search-field">
+                    <input type="text" id="searchInput" placeholder="Search stickers...">
+                    <i class='bx bx-search'></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+    <h1>Welcome To Sticker Glory</h1>
+</header>
+
+<!-- ================= VIDEOS SECTION ================= -->
+
+<section id="videos">
+    <div class="container">
+
+        <article>
+            <video controls poster="/static/poster/video-1-poster.webp">
+                <source src="/static/poster/video-1.mp4" type="video/mp4">
+            </video>
+            <h3>Game Tutorial 1</h3>
+        </article>
+
+        <article>
+            <video controls poster="/static/poster/video-2-poster.webp">
+                <source src="/static/poster/video-2.mp4" type="video/mp4">
+            </video>
+            <h3>Game Trailer 2</h3>
+        </article>
+
+        <article>
+            <video controls poster="/static/poster/video-3-poster.webp">
+                <source src="/static/poster/video-3.mp4" type="video/mp4">
+            </video>
+            <h3>Game Trailer 3</h3>
+        </article>
+
+        <article>
+            <video controls poster="/static/poster/video-4-poster.webp">
+                <source src="/static/poster/video-4.mp4" type="video/mp4">
+            </video>
+            <h3>Game Trailer 4</h3>
+        </article>
+
+    </div>
+</section>
+
+<!-- ================= UPLOAD SECTION ================= -->
+
+<div class="controls">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="uploadInput" class="custom-file-upload">
+            + Upload New Sticker
+        </label>
+        <input type="file"
+               id="uploadInput"
+               name="file"
+               accept="image/*"
+               onchange="this.form.submit()">
+    </form>
+</div>
+
+<!-- ================= STICKER GRID ================= -->
+
+<div id="stickerContainer">
+    {% for sticker in stickers %}
+    <div class="card">
+
+        <img src="/static/uploads/{{ sticker.filename }}" alt="Sticker">
+
+        <h3>{{ sticker.filename.split('_',1)[1] }}</h3>
+
+        <div class="button-group">
+            <a href="/static/uploads/{{ sticker.filename }}"
+               download
+               class="download-btn">
+                Download
+            </a>
+
+            <form action="/delete/{{ sticker.id }}"
+                  method="POST"
+                  style="flex:1;">
+                <button type="submit" class="delete-btn">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ================= IMAGE MODAL ================= -->
+
+<div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
