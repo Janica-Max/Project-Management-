@@ -1,6 +1,7 @@
 const body = document.body;
 const modeToggle = document.querySelector(".dark-light");
 const searchToggle = document.querySelector(".searchToggle");
+const searchField = document.querySelector(".search-field");
 const searchInput = document.getElementById("searchInput");
 const nav = document.querySelector("nav");
 const sidebarOpen = document.querySelector(".siderbarOpen");
@@ -9,30 +10,42 @@ const sidebarClose = document.querySelector(".siderbarClose");
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modalImage");
 const closeBtn = document.querySelector(".close");
+const stickerContainer = document.getElementById("stickerContainer");
 
-// Dark Mode
+// =======================
+// DARK MODE
+// =======================
 if (localStorage.getItem("mode") === "dark-mode") {
     body.classList.add("dark");
+    if (modeToggle) modeToggle.classList.add("active"); // ensure sun/moon icons match mode
 }
 
-modeToggle.addEventListener("click" , () =>{
-            modeToggle.classList.toggle("active");
-            body.classList.toggle("dark");
+if (modeToggle) {
+    modeToggle.addEventListener("click", () => {
+        modeToggle.classList.toggle("active"); // toggle sun/moon icons
+        body.classList.toggle("dark");         // toggle dark mode
 
-            // js code to keep user selected mode even page refresh or file reopen
-            if(body.classList.contains("dark")){
-                localStorage.setItem("mode" , "dark-mode");
-            }else{
-                localStorage.setItem("mode" , "light-mode");
-            }
-        });
+        if (body.classList.contains("dark")) {
+            localStorage.setItem("mode", "dark-mode");
+        } else {
+            localStorage.setItem("mode", "light-mode");
+        }
+    });
+}
 
-// Search Toggle
-searchToggle.addEventListener("click", () => {
-    searchToggle.classList.toggle("active");
-});
+// =======================
+// SEARCH TOGGLE
+// =======================
+if (searchToggle) {
+    searchToggle.addEventListener("click", () => {
+        searchToggle.classList.toggle("active"); // toggle search/X icons
+        if (searchField) searchField.classList.toggle("active"); // show/hide input
+    });
+}
 
-// Sidebar
+// =======================
+// SIDEBAR
+// =======================
 if (sidebarOpen) {
     sidebarOpen.addEventListener("click", () => {
         nav.classList.add("active");
@@ -45,7 +58,9 @@ if (sidebarClose) {
     });
 }
 
-// Live Search
+// =======================
+// LIVE SEARCH
+// =======================
 if (searchInput) {
     searchInput.addEventListener("input", (e) => {
         const term = e.target.value.toLowerCase();
@@ -56,13 +71,39 @@ if (searchInput) {
     });
 }
 
-// Modal
-document.getElementById("stickerContainer").addEventListener("click", (e) => {
-    if (e.target.tagName === "IMG") {
-        modal.classList.add("active");
-        modalImg.src = e.target.src;
+// =======================
+// MODAL SECTION
+// =======================
+
+// Open modal when clicking image
+if (stickerContainer) {
+    stickerContainer.addEventListener("click", (e) => {
+        if (e.target.tagName === "IMG") {
+            modal.classList.add("active");
+            modalImg.src = e.target.src;
+        }
+    });
+}
+
+// Close with X button
+if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+        modal.classList.remove("active");
+    });
+}
+
+// Close when clicking outside image
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.remove("active");
+        }
+    });
+}
+
+// Close with ESC key
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        modal.classList.remove("active");
     }
 });
-
-closeBtn.onclick = () => modal.classList.remove("active");
-

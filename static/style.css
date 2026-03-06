@@ -1,10 +1,777 @@
 :root {
+    --primary: #FF6EC7;      /* Cute pink */
+    --secondary: #6C63FF;    /* Soft violet */
+    --accent: #00FFE0;       /* Cyan accent */
+    --bg: #FFF8FB;           /* Light pastel background */
+    --card-bg: #FFFFFF;
+    --text: #828282;
+    --text-light: #666666;
+
+    --pink-50:  #FFF5FA;  
+    --pink-100: #FFE6F2;   
+    --pink-200: #FFD1E8;   
+    --pink-300: #FFB8DC;  
+    --pink-400: #F79CCB;   
+    --pink-500: #E881B9;   
+    --pink-600: #D86AA8;
+
+    --grey-0:   #fafafa;
+    --grey-50:  #F9F9F9;  
+    --grey-100: #F2F2F2;  
+    --grey-200: #E0E0E0;  
+    --grey-300: #C7C7C7;  
+    --grey-400: #ADADAD;  
+    --grey-500: #939393;  
+    --grey-600: #787878;  
+
+    --primary-font: "Poppins', 'Segoe UI', Arial, sans-serif;";
+    --secondary-font: "Sour Gummy", sans-serif;
+    --info-font: "Inter, sans-serif";
+    --cute-font: "Fuzzy Bubbles", sans-serif;
+}
+
+/* =============================
+   BODY & DEFAULT FONT
+============================= */
+body {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    text-align: center;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+
+    /* background: linear-gradient(135deg, #9e5cca, #B5FFFC, #FFD1FF, #3f5585);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    transition: background 0.4s ease, color 0.4s ease; */
+}
+
+/* @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+} */
+
+/* =============================
+   HEADINGS
+============================= */
+h1, h2, h3 {
+    font-family: 'Baloo 2', 'Poppins', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.gradient-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: var(--secondary-font);
+    /* background: linear-gradient(90deg, #FF6EC7, #6C63FF, #00FFE0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; */
+
+    color: #000000;
+}
+
+/* =============================
+   PARAGRAPH / BODY TEXT
+============================= */
+p, li, span, small {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.6rem;
+    color: var(--text);
+}
+
+/* =============================
+   FADE TRANSITION
+============================= */
+body.fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* =============================
+   NAVBAR
+============================= */
+.navbar {
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px;
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 140px;
+}
+
+.navdiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.nav-logo a {
+    font-weight: 800;
+    font-size: 1.8rem;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.navdiv ul {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    align-items: center;
+    padding-left: 0;
+}
+
+.navdiv ul li a {
+    text-decoration: none;
+    color: var(--text);
+    padding: 8px 18px;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    background: transparent;
+}
+
+.navdiv ul li a:hover {
+    color: #979797;
+}
+
+.logo {
+    width: 45px;
+    height: 45px;
+}
+
+/* =============================
+   STICKER BUTTON
+============================= */
+.cool-btn {
+    padding: 14px 16px;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 100;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6C63FF, #FF6EC7);
+    color: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.cool-btn::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 80%;
+    height: 80%;
+    background: rgba(255,255,255,0.2);
+    transform: skewX(-20deg);
+    transition: all 0.5s ease;
+}
+
+.cool-btn:hover::after {
+    left: 200%;
+}
+
+.cool-btn:hover {
+    transform: scale(1.1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.hero {
+    font-size: 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    margin: 7rem auto 0 auto;
+    max-width: 1100px;
+    height: 90vh;
+}
+
+.hero-description {
+    font-family: var(--cute-font);
+    width: 500px;
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+}
+
+.placeholder-images {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+}
+
+.placeholder-images img {
+    width: 150px; 
+    height: 150px;
+    object-fit: cover; 
+}
+/* =============================
+   OFFER / INFO GRID
+============================= */
+.offer {
+    font-family: var(--info-font);
+    margin: 2rem;
+}
+
+.offer h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 40px;
+    padding: 40px 20px;
+    justify-items: center;
+}
+
+.info-card:nth-child(1) { grid-column: 1; grid-row: 1; }
+.info-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+.info-card:nth-child(3) { grid-column: 3; grid-row: 1; }
+.info-card:nth-child(4) { grid-column: 1; grid-row: 2; }
+.info-card:nth-child(5) { grid-column: 2; grid-row: 2; }
+
+.info-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: rgba(14, 63, 126, 0.06) 0px 0px 0px 1px, rgba(42, 51, 70, 0.03) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 2px 2px -1px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.03) 0px 5px 5px -2.5px, rgba(42, 51, 70, 0.03) 0px 10px 10px -5px, rgba(42, 51, 70, 0.03) 0px 24px 24px -8px;
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.info-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--secondary);
+}
+
+.info-card p {
+    font-size: 1rem;
+    color: var(--text-light);
+    line-height: 1.6rem;
+}
+
+/* =============================
+   BOX TEXT
+============================= */
+.box-text {
+    width: 90%;
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 30px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+    text-align: left;
+}
+
+.box-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.box-left {
+    flex: 1;
+}
+
+.box-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.box-text h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    font-family: var(--secondary-font);
+}
+
+.members {
+    display: flex;
+    gap: 15px;
+}
+
+.member {
+    position: relative; 
+    cursor: pointer;
+}
+
+.member img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: block;
+}
+
+/* Tooltip */
+.member::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background-color: var(--grey-800, #444);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+/* Small arrow */
+.member::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--grey-800, #444) transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+/* Show tooltip on hover */
+.member:hover::after,
+.member:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/* =============================
+   CONTACT ICON ANIMATIONS
+============================= */
+.platform {
+    text-align: center;
+    padding: 50px 20px;
+    background: #000; /* optional black background for contrast */
+}
+
+.platform h3 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 50px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+
+.icon-box {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+/* Base icon style */
+.social-icon {
+    width: 100px; /* bigger size */
+    height: 100px;
+    filter: grayscale(80%) brightness(0.8); /* slightly muted before hover */
+    transition: all 0.5s ease;
+}
+
+/* Discord: rotate once on hover and stop */
+.icon-box a:nth-child(1) .social-icon:hover {
+    animation: rotateIcon 1.2s ease-in-out forwards; /* rotate once and stay */
+    filter: grayscale(0%) brightness(1.1); /* full color during rotation */
+}
+
+/* Gmail: color flow top-to-bottom */
+.icon-box a:nth-child(2) .social-icon:hover {
+    filter: grayscale(0%) brightness(1);
+    animation: gmailFlow 2s linear infinite;
+}
+
+/* Viber: pop-up full color */
+.icon-box a:nth-child(3) .social-icon:hover {
+    transform: scale(1.4); /* slightly bigger pop */
+    filter: grayscale(0%) brightness(1);
+}
+
+/* =============================
+   KEYFRAMES
+============================= */
+
+/* Rotate animation with a "pause" at the end */
+@keyframes rotateIcon {
+    0% { transform: rotate(0deg); }
+    70% { transform: rotate(360deg); } /* full rotation */
+    100% { transform: rotate(360deg); } /* pause at end for 0.5s - 1s */
+}
+
+/* =============================
+   KEYFRAMES
+============================= */
+
+/* Gmail color flow top-to-bottom */
+@keyframes gmailFlow {
+    0% { filter: brightness(0.8) saturate(1) hue-rotate(0deg); }
+    25% { filter: brightness(1) saturate(1.2) hue-rotate(20deg); }
+    50% { filter: brightness(1.1) saturate(1.4) hue-rotate(40deg); }
+    75% { filter: brightness(1) saturate(1.2) hue-rotate(20deg); }
+    100% { filter: brightness(0.8) saturate(1) hue-rotate(0deg); }
+}
+
+/* Modern dividing line between contact and footer */
+.contact-divider {
+    height: 3px;            /* thickness of the line */
+    width: 90%;             /* smaller than full width for style */
+    margin: 40px auto;      /* spacing above and below */
+    border-radius: 10px;
+
+    /* Gradient for a cool modern look */
+    background: linear-gradient(90deg, #FF6EC7, #6C63FF, #00FFE0);
+
+    /* Optional glowing effect */
+    box-shadow: 0 0 8px rgba(255,110,199,0.6),
+                0 0 12px rgba(108,99,255,0.5),
+                0 0 16px rgba(0,255,224,0.4);
+}
+/* =============================
+   FOOTER FLEX DESIGN
+============================= */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 20px;
+    background-color: #000; /* dark background */
+    color: #fff;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif;
+    margin-top: -50px;
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 45%; /* make sure they stay side by side */
+}
+
+.footer-left h4, .footer-right h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.footer-left p, .footer-right a {
+    font-size: 1rem;
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+    color: #FF6EC7; /* highlight on hover */
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+    background-color: #000;
+    flex-wrap: wrap;
+    padding: 15px 0;
+    font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-left, .footer-right {
+        max-width: 100%;
+    }
+}
+
+/* =============================
+   ABOUT BOX / VIDEOS
+============================= */
+.about-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 40px 20px;
+    text-align: left;
+}
+
+.file-text, .file-text2 {
+    flex: 1;
+    max-width: 800px;
+}
+
+.file-text h2, .file-text2 h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.file-text p, .file-text2 p {
+    font-size: 1.1rem;
+    line-height: 28px;
+}
+
+.file-video-box {
+    flex: 1;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.file-video-box video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+}
+
+/* =============================
+   SCROLL ANIMATION
+============================= */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =============================
+   TABLET MEDIA QUERIES
+============================= */
+@media (max-width: 1000px) {
+    .about-box {
+        flex-direction: column;
+        text-align: center;
+    }
+    .file-text, .file-text2, .file-video-box {
+        max-width: 100%;
+    }
+    .navdiv ul {
+        gap: 20px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+    }
+}
+
+/* =============================
+   MOBILE MEDIA QUERIES
+============================= */
+@media (max-width: 600px) {
+    /* Navbar adjustments */
+    .navdiv {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navdiv ul {
+        flex-direction: column;
+        gap: 15px;
+        padding-left: 0;
+    }
+
+    .navdiv ul li a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .cool-btn {
+        padding: 12px 28px;
+        font-size: 1rem;
+    }
+
+    /* Hero text */
+    .gradient-text {
+         font-size: 2.5rem;
+        font-weight: 700;
+    
+    }
+
+    /* Info grid single column */
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .info-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .info-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-card p {
+        font-size: 0.95rem;
+    }
+
+    /* Box text */
+    .box-text {
+        font-size: 1rem;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .box-text h3 {
+        font-size: 1.5rem;
+    }
+
+    /* About / Video sections */
+    .about-box {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .file-text, .file-text2, .file-video-box {
+        max-width: 100%;
+    }
+
+    .file-text h2, .file-text2 h2 {
+        font-size: 1.5rem;
+    }
+
+    .file-text p, .file-text2 p {
+        font-size: 1rem;
+    }
+
+    .file-video-box {
+        max-width: 100%;
+    }
+
+    /* Platform icons */
+    .icon-box {
+        gap: 30px;
+    }
+
+    .social-icon {
+        width: 55px;
+        height: 55px;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        padding: 15px 20px;
+        border-radius: 0;
+        gap: 15px;
+    }
+
+    .footer-logo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .footer-bottom p {
+        font-size: 0.85rem;
+    }
+}
+.cute-box {
+    position: relative;
+    display: inline-block;
+    padding: 40px;
+    border-radius: 20px;
+    border:none;
+}
+
+.top-sticker {
+    position: absolute;
+    top: -1px;      /* move above box */
+    right: 79%;
+    transform: translateX(-50%);
+    width: 80px;
+    border: none;
+}
+.cute-box {
+    position: relative;
+    display: inline-block;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+}
+
+.bottom-sticker {
+    position: absolute;
+    bottom: -77px;   /* pushes it below the box */
+    left: 95.5%;
+    transform: translateX(-50%);
+    width: 80px;
+}
+
+/* ==========================================================================================*/
+/* ================================ Another Css ===================================*/
+
+:root {
     --primary: #6c63ff;
     --card-bg: #ffffff;
     --text-color: #333;
     --body-color: white;
     --nav-color: #1f1f2e;
-    --side-nav: #11101d;
+    --side-nav: #000000;
     --search-text: #010718;
     --search-bar: #F2F2F2;
 }
@@ -12,9 +779,9 @@
 /* DARK MODE VARIABLES */
 body.dark {
     --body-color: #18191A;
-    --nav-color: #242526;
+    --nav-color: #000000;
     --side-nav: #242526;
-    --text-color: #ccc;
+    --text-color: #ffffff;
     --search-bar: #3a3b3c;
     --card-bg: #242526;
 }
@@ -36,26 +803,6 @@ body {
 
 /* ================= NAVBAR ================= */
 
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-color: var(--nav-color);
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    max-width: 1500px;
-    margin: auto;
-    padding: 0 20px;
-}
 
 .logo a {
     font-size: 30px;
@@ -116,133 +863,239 @@ nav {
 }
 
 /* ================= SEARCH + DARK MODE ================= */
-
-.nav-bar .darkLight-searchBox{
+.navbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
+    height: 100px;
+    border-bottom: 2px solid var(--primary);
+
+    /* Glass blur effect */
+    background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+    backdrop-filter: blur(10px); /* the blur effect */
+    -webkit-backdrop-filter: blur(10px); /* for Safari */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* optional subtle shadow */
 }
 
-.darkLight-searchBox .dark-light,
-.darkLight-searchBox .searchToggle{
-    position: relative;
-    height: 40px;
+/* LEFT */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-left .logo {
+    width: 50px;
+    height: 50px;
+}
+
+/* CENTER BOX */
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid var(--primary);
+    border-radius: 50px;
+    padding: 8px 20px;
+}
+
+/* LINKS */
+.nav-center .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-center .nav-links li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-center .nav-links li a:hover {
+    color: var(--primary);
+}
+
+:root {
+    --primary: #ae00ff;
+    --text-color: #000;
+    --body-color: #fff;
+}
+
+/* ===== Body colors ===== */
+body {
+    color: var(--text-color);
+    background-color: var(--body-color);
+    transition: 0.3s;
+}
+
+body.dark {
+    color: #fff;
+    background-color: #121212;
+}
+
+/* Headings, links for dark mode */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark a {
+    color: #fff;
+}
+
+/* =========================
+   Search + Dark Toggle Box
+========================= */
+.darkLight-searchBox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Search Toggle button */
+.searchToggle {
     width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--search-bar);
     border-radius: 50%;
-    margin: 0 5px;
-}
-
-.dark-light i,
-.searchToggle i{
-    position: absolute;
-    color: var(--text-color);
-    font-size: 22px;
+    border: 2px solid var(--primary);
+    background: transparent;
     cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* DARK MODE ICON SWITCH */
-
-.dark-light i.sun{
-    opacity: 0;
-    pointer-events: none;
-}
-
-.dark-light.active i.sun{
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.dark-light.active i.moon{
-    opacity: 0;
-    pointer-events: none;
-}
-
-.searchToggle i.cancel{
-    opacity: 0;
-    pointer-events: none;
-}
-
-.searchToggle.active i.cancel{
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.searchToggle.active i.search{
-    opacity: 0;
-    pointer-events: none;
-}
-
-
-/* SEARCH FIELD */
-
-.searchBox{
     position: relative;
 }
 
-.searchBox .search-field{
+/* Search icons */
+.searchToggle i.bx-icon {
     position: absolute;
-    bottom: -85px;
-    right: 5px;
-    height: 50px;
-    width: 300px;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+/* Default: show search, hide X */
+.searchToggle i.search {
+    opacity: 1;
+    pointer-events: auto;
+}
+.searchToggle i.cancel {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Active toggle: hide search, show X */
+.searchToggle.active i.search {
+    opacity: 0;
+    pointer-events: none;
+}
+.searchToggle.active i.cancel {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.searchBox {
+    position: relative; /* make search field positioned relative to this container */
+}
+
+.search-field {
+    position: absolute;
+    top: 50px; /* distance below the search icon */
+    left: 50%;
+    transform: translateX(-50%); /* center horizontally under the icon */
+    width: 250px;
+    height: 40px;
     display: flex;
     align-items: center;
-    background-color: var(--nav-color);
-    padding: 3px;
-    border-radius: 6px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background: var(--body-color);
+    border-radius: 20px;
+    padding: 0 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease;
 }
 
-.searchToggle.active ~ .search-field{
-    bottom: -74px;
+/* Show search field when active */
+.search-field.active {
     opacity: 1;
     pointer-events: auto;
 }
 
-.search-field::before{
-    content: '';
-    position: absolute;
-    right: 14px;
-    top: -4px;
-    height: 12px;
-    width: 12px;
-    background-color: var(--nav-color);
-    transform: rotate(-45deg);
-    z-index: -1;
-}
-
-.search-field input{
-    height: 100%;
-    width: 100%;
-    padding: 0 45px;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--search-text);
-    background-color: var(--search-bar);
-}
-
-.search-field i{
-    position: absolute;
-    color: var(--nav-color);
-    right: 15px;
-    font-size: 22px;
+/* Dark/Light toggle button */
+.dark-light {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
     cursor: pointer;
+    position: relative;
 }
 
-body.dark .search-field i{
-    color: var(--text-color);
+/* Sun/Moon icons */
+.dark-light i {
+    position: absolute;
+    font-size: 22px;
+    transition: 0.3s;
 }
 
+/* Default: show moon, hide sun */
+.dark-light i.moon {
+    opacity: 1;
+    pointer-events: auto;
+}
+.dark-light i.sun {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Active toggle: show sun, hide moon */
+.dark-light.active i.moon {
+    opacity: 0;
+    pointer-events: none;
+}
+.dark-light.active i.sun {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* Light mode (default) */
+body {
+    color: var(--text-color); /* black or whatever your default is */
+    background-color: #fff;   /* light background */
+    transition: color 0.3s, background-color 0.3s;
+}
+
+/* Dark mode */
+body.dark {
+    color: #ffffff;           /* white text for dark mode */
+    background-color: #121212; /* dark background */
+}
+
+/* Optional: headings, links, buttons */
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark a {
+    color: #ffffff; /* text color for dark mode */
+}
+
+/* Keep your icon rules */
+body.dark .dark-light i,
+body.dark .searchToggle i,
+body.dark .search-field i {
+    color: #ffffff; /* example for icons in dark mode */
+}
+
+/* RIGHT BUTTON */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
 /* ================= HEADER ================= */
 
 header {
@@ -276,6 +1129,7 @@ header h1 {
 
 /* ================= STICKER GRID ================= */
 
+
 #stickerContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -284,6 +1138,8 @@ header h1 {
     max-width: 1200px;
     margin: auto;
 }
+
+/* ================= CARD ================= */
 
 .card {
     background: var(--card-bg);
@@ -311,48 +1167,23 @@ header h1 {
     color: var(--text-color);
 }
 
-.button-group {
-    margin-top: 10px;
-    display: flex;
-    gap: 5px;
-}
-
-.download-btn,
-.delete-btn {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-}
-
-.download-btn {
-    background: var(--primary);
-    color: white;
-}
-
-.delete-btn {
-    background: #ff4d4d;
-    color: white;
-}
-
 /* ================= MODAL ================= */
 
-.modal {
-    display: none;
+#modal {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
     justify-content: center;
     align-items: center;
+    z-index: 2000;
 }
 
-.modal.active {
+#modal.active {
     display: flex;
 }
 
-.modal-content {
+#modal img {
     max-width: 80%;
     max-height: 80%;
     border-radius: 10px;
@@ -366,7 +1197,17 @@ header h1 {
     color: white;
     cursor: pointer;
 }
+@media (max-width: 1000px) {
+    #stickerContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
+@media (max-width: 600px) {
+    #stickerContainer {
+        grid-template-columns: 1fr;
+    }
+}
 /* ================= VIDEOS SECTION ================= */
 
 #videos {
@@ -435,4 +1276,27 @@ header h1 {
     #videos .container {
         grid-template-columns: 1fr;
     }
+}
+
+/* Pagination */
+.pagination {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 5px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    font-weight: 500;
+    border: 2px solid #6c63ff;   /* 👈 border added */
+}
+
+.pagination a:hover {
+    background: #727272;
+    color: white;
 }

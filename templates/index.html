@@ -3,35 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="icon" type="image/svg+xml" href="./img/fav-icon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="top-icon" href="/static/images/a-removebg-preview.png">
     <title>Animation Webpage</title>
 </head>
 <body>
-         <nav class="navbar">
-        <div class="navdiv">
-            <div class="nav-logo">
-               <img src="/img/fav-icon.ico" class="logo"> <a href="#">Animation Website</a></div>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/about.html">About</a></li>
-<button class="cool-btn">Get Stickers</button>
-            </a>
-            </ul> 
+<nav class="navbar">
+    <!-- LEFT: Logo -->
+    <div class="nav-logo">
+        <img src="/static/images/a-removebg-preview.png" class="logo">
+        <a href="#">nimation Website</a>
+    </div>
+
+    <!-- CENTER: Links + Search + Dark/Light -->
+    <div class="nav-center">
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
+
+       <div class="darkLight-searchBox">
+    <!-- Search -->
+    <div class="searchBox">
+        <div class="searchToggle">
+            <i class='bx bx-x bx-icon cancel'></i>
+            <i class='bx bx-search bx-icon search'></i>
         </div>
-    </nav>
+        <div class="search-field">
+            <input type="text" id="searchInput" placeholder="Search stickers...">
+            <i class='bx bx-search'></i>
+        </div>
+    </div>
+
+    <!-- Dark/Light toggle -->
+    <div class="dark-light">
+        <i class='bx bx-moon moon'></i>
+        <i class='bx bx-sun sun'></i>
+    </div>
+</div>
+    </div>
+
+    <!-- RIGHT: Button -->
+    <div class="nav-right">
+        <a href="{{ url_for('browser')}}">
+            <button class="cool-btn">Get Stickers</button>
+        </a>
+    </div>
+</nav>
 
     <section class="hero">
-       <h1 class="gradient-text">Open Source for GIFs and Stickers you love!</h1> 
+      <div class="cute-box">
+    <div class="gradient-text animated-bottom">
+       Open Source for GIFs and Stickers you love!
+    </div>
+
+    <img src="/static/images/hanging-removebg-preview.png" class="bottom-sticker animated-bottom" data-base-transform="translateX(-50%)" alt="cute sticker">
+    </div>
     
        <div class="placeholder-images">
-            <img src="img/fish.png" alt="Placeholder 1">
-            <img src="img/octopus.png" alt="Placeholder 2">
-            <img src="img/whale.png" alt="Placeholder 3">
+            <img src="/static/images/fish.png" alt="Placeholder 1">
+            <img src="/static/images/octopus.png" alt="Placeholder 2">
+            <img src="/static/images/whale.png" alt="Placeholder 3">
         </div>
 
         <p class="hero-description">
@@ -64,7 +102,7 @@
             </div>
         </div>
     </section>
-    <section class="box-text">
+    <section class="box-text animated-left">
         <div class="box-content">
             <div class="box-left">
                 <h3>About This Project</h3>
@@ -75,22 +113,22 @@
                 </p>
             </div>
     
-            <div class="members">
-                <div class="member" data-name="Member">
-                    <a href="#" target="_blank">
-                        <img src="https://i.pravatar.cc/150?img=20" alt="Member">
+            <div class="members animated-right" >
+                <div class="member" data-name="Naung Naung Lin">
+                    <a href="mailto:nawnawlinn2@gmail.com" target="_blank">
+                        <img src="/static/images/My Profile.jpg" alt="Naung Naung Lin">
                     </a>
                 </div>
             
-                <div class="member" data-name="Member">
+                <div class="member" data-name="Khant Naing Htun">
                     <a href="#">
-                        <img src="https://i.pravatar.cc/150?img=32" alt="Member">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="Khant Naing Htun">
                     </a>
                 </div>
             
-                <div class="member" data-name="Member">
+                <div class="member" data-name="Saung Wai Hnin Htet">
                     <a href="#">
-                        <img src="https://i.pravatar.cc/150?img=45" alt="Member">
+                        <img src="https://i.pravatar.cc/150?img=45" alt="Saung Wai Hnin Htet">
                     </a>
                 </div>
             </div>
@@ -112,25 +150,41 @@
         </div>
     </section> -->
 
-    <footer>
-        <div class="footer-container">
-            <div class="logobox">
-                <img src="/img/fav-icon.ico" alt="Company Logo" class="footer-logo">
-            </div>
-    
-            <div class="footer-links">
-                <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">
-                    <img src="/img/discord.svg" alt="Discord" class="social-icon">
-                </a>
-    
-                <a href="https://invite.viber.com/?g=ch5xK9wWHVb_WlMNXVJbRiPsJR-Mn6bx" target="_blank">
-                    <img src="/img/viber.svg" alt="Viber" class="social-icon">
-                </a>
-
-            </div>
+<section id="platform" class="platform">
+        <h3>Contact Us</h3>
+        <div class="icon-box">
+            <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">
+                <img src="/static/images/Discord__2_-removebg-preview.png" alt="Discord" class="social-icon">
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nawnawlinn2@gmail.com" target="_blank">
+                <img src="/static/images/Gmail_Neon_App_Icon-removebg-preview.png" alt="Gmail" class="social-icon">
+            </a>
+            <a href="https://invite.viber.com/?g=ch5xK9wWHVb_WlMNXVJbRiPsJR-Mn6bx" target="_blank">
+                <img src="/static/images/viber__2_-removebg-preview.png" alt="Viber" class="social-icon">
+            </a>
         </div>
-    </footer>
+        <div class="contact-divider"></div>
+    </section>
+    
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <h4>About Us</h4>
+      <p>Animation.web by ILC BCS students. Bringing stickers, GIFs, and fun to life!</p>
+    </div>
 
+    <div class="footer-right">
+      <h4>Ask From</h4>
+      <a href="mailto:nawnawlinn2@gmail.com">nawnawlinn2@gmail.com</a>
+      <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">Join our Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© animation.web by ILC BCS students</div>
+</footer>
+
+    <script src="/static/muv.min.js"></script>
     <script src="scripts/transition.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

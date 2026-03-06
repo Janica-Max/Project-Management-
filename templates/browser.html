@@ -2,68 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sticker Glory</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="./img/fav-icon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Animation Webpage</title>
 </head>
 <body>
 
 <!-- ================= NAVBAR ================= -->
 
-<nav>
-    <div class="nav-bar">
+<nav class="navbar">
+    <!-- LEFT: Logo -->
+    <div class="nav-logo">
+       <img src="/static/images/a-removebg-preview.png" class="logo">
+        <a href="#">nimation Website</a>
+    </div>
 
-        <!-- Mobile Menu Icon -->
-        <i class='bx bx-menu siderbarOpen'></i>
+    <!-- CENTER: Links + Search + Dark/Light -->
+    <div class="nav-center">
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+        </ul>
 
-        <!-- LOGO SECTION -->
-        <div class="logo">
-            <a href="/">
-                <img src="/static/images/fav-icon.ico" alt="Logo" class="site-logo">
-                <span class="site-name">Sticker Glory</span>
-            </a>
-        </div>
-
-        <!-- MENU -->
-        <div class="menu">
-            <div class="logo-toggle">
-                <span class="logo">
-                    <a href="/">Sticker Glory</a>
-                </span>
-                <i class='bx bx-x siderbarClose'></i>
-            </div>
-
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="#videos">Videos</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
-        </div>
-
-        <!-- DARK MODE + SEARCH -->
         <div class="darkLight-searchBox">
+               <div class="searchBox">
+        <div class="searchToggle">
+            <i class='bx bx-x bx-icon cancel'></i>
+            <i class='bx bx-search bx-icon search'></i>
+        </div>
+        <div class="search-field">
+            <input type="text" id="searchInput" placeholder="Search stickers...">
+            <i class='bx bx-search'></i>
+        </div>
+    </div>
 
-            <!-- Dark Mode -->
+            <!-- Dark/Light toggle -->
             <div class="dark-light">
                 <i class='bx bx-moon moon'></i>
                 <i class='bx bx-sun sun'></i>
             </div>
-
-            <!-- Search -->
-            <div class="searchBox">
-                <div class="searchToggle">
-                    <i class='bx bx-x cancel'></i>
-                    <i class='bx bx-search search'></i>
-                </div>
-
-                <div class="search-field">
-                    <input type="text" id="searchInput" placeholder="Search stickers...">
-                    <i class='bx bx-search'></i>
-                </div>
-            </div>
         </div>
+    </div>
+
+    <!-- RIGHT: Button -->
+    <div class="nav-right">
+        <a href="{{ url_for('browser')}}">
+            <button class="cool-btn">Get Stickers</button>
+        </a>
     </div>
 </nav>
 
@@ -125,41 +116,94 @@
 </div>
 
 <!-- ================= STICKER GRID ================= -->
-
 <div id="stickerContainer">
-    {% for sticker in stickers %}
-    <div class="card">
+    {% for sticker in stickers.items %}
+        <div class="card">
+            <img src="{{ url_for('static', filename='uploads/' + sticker.filename) }}" alt="Sticker">
+            <h3>{{ sticker.filename }}</h3>
 
-        <img src="/static/uploads/{{ sticker.filename }}" alt="Sticker">
+            <div class="button-group">
+                <a href="{{ url_for('static', filename='uploads/' + sticker.filename) }}"
+                   download
+                   class="download-btn">
+                    Download
+                </a>
 
-        <h3>{{ sticker.filename.split('_',1)[1] }}</h3>
-
-        <div class="button-group">
-            <a href="/static/uploads/{{ sticker.filename }}"
-               download
-               class="download-btn">
-                Download
-            </a>
-
-            <form action="/delete/{{ sticker.id }}"
-                  method="POST"
-                  style="flex:1;">
-                <button type="submit" class="delete-btn">
-                    Delete
-                </button>
-            </form>
+                <form action="/delete/{{ sticker.id }}" method="POST" style="flex:1;">
+                    <button type="submit" class="delete-btn">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
     {% endfor %}
 </div>
+   <div class="pagination">
 
-<!-- ================= IMAGE MODAL ================= -->
+    {% if stickers.has_prev %}
+        <a href="{{ url_for('browser', page=stickers.prev_num) }}">Previous</a>
+    {% endif %}
 
-<div id="modal" class="modal">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="modalImage">
+    {% for page_num in stickers.iter_pages() %}
+        {% if page_num %}
+            <a href="{{ url_for('browser', page=page_num) }}">
+                {{ page_num }}
+            </a>
+        {% endif %}
+    {% endfor %}
+
+    {% if stickers.has_next %}
+        <a href="{{ url_for('browser', page=stickers.next_num) }}">Next</a>
+    {% endif %}
+
 </div>
 
-<script src="/static/script.js"></script>
+<!-- Modal (OUTSIDE the grid) -->
+<div id="modal">
+    <span class="close">&times;</span>
+    <img id="modalImage">
+</div>
+
+ <section id="platform" class="platform">
+        <h3>Contact Us</h3>
+        <div class="icon-box">
+            <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">
+                <img src="/static/images/Discord__2_-removebg-preview.png" alt="Discord" class="social-icon">
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nawnawlinn2@gmail.com" target="_blank">
+                <img src="/static/images/Gmail_Neon_App_Icon-removebg-preview.png" alt="Gmail" class="social-icon">
+            </a>
+            <a href="https://invite.viber.com/?g=ch5xK9wWHVb_WlMNXVJbRiPsJR-Mn6bx" target="_blank">
+                <img src="/static/images/viber__2_-removebg-preview.png" alt="Viber" class="social-icon">
+            </a>
+        </div>
+        <div class="contact-divider"></div>
+    </section>
+    
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <h4>About Us</h4>
+      <p>Animation.web by ILC BCS students. Bringing stickers, GIFs, and fun to life!</p>
+    </div>
+
+    <div class="footer-right">
+      <h4>Ask From</h4>
+      <a href="mailto:nawnawlinn2@gmail.com">nawnawlinn2@gmail.com</a>
+      <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">Join our Discord</a>
+    </div>
+  <div class="pagination">
+
+    {% if stickers.has_prev %}
+        <a href="{{ url_for('browser', page=stickers.prev_num) }}">Previous</a>
+    {% endif %}
+    </div>
+
+
+  <div class="footer-bottom">© animation.web by ILC BCS students</div>
+</footer>
+        <script src="/static/muv.min.js"></script>
+    <script src="scripts/transition.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

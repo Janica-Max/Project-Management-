@@ -6,7 +6,8 @@ import uuid
 
 app = Flask(__name__)
 
-# CONFIG
+# ================= CONFIG =================
+
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(BASE_DIR, "database.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -16,7 +17,8 @@ os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
 db = SQLAlchemy(app)
 
-# DATABASE MODEL
+# ================= DATABASE MODEL =================
+
 class Sticker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(200), nullable=False)
@@ -24,11 +26,30 @@ class Sticker(db.Model):
 with app.app_context():
     db.create_all()
 
-# ROUTES
+# ================= ROUTES =================
+
 @app.route("/")
-def index():
-    stickers = Sticker.query.order_by(Sticker.id.desc()).all()
+def home():
+    return render_template("index.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/browser")
+def browser():
+    page = request.args.get("page", 1, type=int)
+    per_page = 8
+
+    stickers = Sticker.query.order_by(Sticker.id.desc()).paginate(
+        page=page,
+        per_page=per_page
+    )
+
     return render_template("browser.html", stickers=stickers)
+
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
@@ -51,6 +72,7 @@ def upload_file():
 
     return redirect(url_for("browser"))
 
+
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete_sticker(id):
     sticker = Sticker.query.get_or_404(id)
@@ -64,6 +86,8 @@ def delete_sticker(id):
 
     return redirect(url_for("browser"))
 
+
+# ================= RUN APP =================
+
 if __name__ == "__main__":
     app.run(debug=True)
-    
