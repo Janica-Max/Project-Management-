@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="top-icon" href="/static/images/a-removebg-preview.png">
     <title>Animation Webpage</title>
 </head>
 <body>
@@ -180,6 +181,7 @@
         <div class="contact-divider"></div>
     </section>
     
+    
 <footer>
   <div class="footer-container">
     <div class="footer-left">
@@ -192,13 +194,7 @@
       <a href="mailto:nawnawlinn2@gmail.com">nawnawlinn2@gmail.com</a>
       <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">Join our Discord</a>
     </div>
-  <div class="pagination">
-
-    {% if stickers.has_prev %}
-        <a href="{{ url_for('browser', page=stickers.prev_num) }}">Previous</a>
-    {% endif %}
-    </div>
-
+  </div>
 
   <div class="footer-bottom">© animation.web by ILC BCS students</div>
 </footer>
