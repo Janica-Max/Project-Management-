@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/svg+xml" href="./img/fav-icon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="top-icon" href="/static/images/a-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Animation Webpage</title>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar">
+    <!-- LEFT: Logo -->
+    <div class="nav-logo">
+       <img src="/static/images/a-removebg-preview.png" class="logo">
+        <a href="#">Animation Website</a>
+    </div>
+
+    <!-- CENTER: Links + Search + Dark/Light -->
+    <div class="nav-center">
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('browser') }}">Browser</a></li>
+        </ul>
+
+        <div class="darkLight-searchBox">
+
+            <div class="dark-light">
+                <i class='bx bx-moon moon'></i>
+                <i class='bx bx-sun sun'></i>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= T-SHIRT SECTION ================= -->
+<section class="tshirt-section">
+
+<div class="product-container">
+
+    <!-- PRODUCT IMAGE SIDE -->
+    <div class="product-left">
+
+<div class="image-card">
+
+    <div class="shirt-preview">
+
+        <img id="shirt-image"
+        src="{{ url_for('static', filename='images/white tshirt.jpg') }}"
+        class="main-shirt">
+
+        <img id="sticker-image"
+        src="{{ url_for('static', filename='uploads/' + design) }}"
+        class="sticker-preview">
+
+    </div>
+
+</div>
+
+    </div>
+
+
+    <!-- PRODUCT DETAILS SIDE -->
+    <div class="product-right">
+
+        <span class="badge">BEST SELLER</span>
+
+        <h1 class="product-title">
+            Custom Sticker T-Shirt
+        </h1>
+
+        <p class="product-text">
+            Your sticker printed on a premium cotton T-shirt. 
+            Comfortable, durable, and perfect for gaming lovers.
+        </p>
+
+        <div class="price-box">
+            <span class="price">$19.99</span>
+            <span class="old-price">$29.99</span>
+        </div>
+
+
+        <!-- COLOR -->
+        <div class="option-group">
+
+            <p>Select Color</p>
+
+            <div class="colors">
+
+                <button onclick="changeColor('white')" class="color white"></button>
+
+                <button onclick="changeColor('black')" class="color black"></button>
+
+                <button onclick="changeColor('gray')" class="color gray"></button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIZE -->
+        <div class="option-group">
+
+            <p>Select Size</p>
+
+            <div class="sizes">
+
+    <button onclick="selectSize(this)">S</button>
+    <button onclick="selectSize(this)">M</button>
+    <button onclick="selectSize(this)">L</button>
+    <button onclick="selectSize(this)">XL</button>
+
+</div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="action-buttons">
+           <button class="buy" onclick="openPayment()">Buy Now</button>
+        </div>
+<!-- Apple Style Payment Popup -->
+<!-- PAYMENT POPUP -->
+<div id="paymentModal" class="checkout-overlay">
+
+  <div class="checkout-box">
+
+    <div class="checkout-header">
+      <h2>Secure Checkout</h2>
+      <span onclick="closePayment()" class="close-checkout">✕</span>
+    </div>
+
+    <p class="checkout-sub">Select your payment method</p>
+
+    <div class="payment-grid">
+
+      <div class="payment-card" onclick="showQR('kbz')">
+        <img src="/static/payments/KBZ Pay.jpg">
+        <p>KBZPay</p>
+      </div>
+
+      <div class="payment-card" onclick="showQR('aya')">
+        <img src="/static/payments/AYA Pay on TikTok.jpg">
+        <p>AYA Pay</p>
+      </div>
+
+      <div class="payment-card" onclick="showQR('city')">
+        <img src="/static/payments/uabpay.png">
+        <p>City Pay</p>
+      </div>
+
+    </div>
+
+    <div id="qrSection" class="qr-section"></div>
+
+  </div>
+
+</div>
+
+        <div class="features">
+
+            <p>✔ Free Shipping</p>
+            <p>✔ Secure Payment</p>
+            <p>✔ 30-Day Return</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+<script>
+
+function changeColor(color) {
+
+    const shirt = document.getElementById("shirt-image");
+
+    if(color === 'white'){
+        shirt.src = "{{ url_for('static', filename='images/white tshirt.jpg') }}";
+    }
+    else if(color === 'black'){
+        shirt.src = "{{ url_for('static', filename='images/black tshirt.jpg') }}";
+    }
+    else if(color === 'gray'){
+        shirt.src = "{{ url_for('static', filename='images/gray tshirt.jpg') }}";
+    }
+
+}
+
+
+/* SIZE SELECTION */
+
+function selectSize(button){
+
+    const sizes = document.querySelectorAll(".sizes button");
+
+    sizes.forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+}
+
+</script>
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-left">
+      <h4>About Us</h4>
+      <p>Animation.web by ILC BCS students. Bringing stickers, GIFs, and fun to life!</p>
+    </div>
+
+    <div class="footer-right">
+      <h4>Ask From</h4>
+      <a href="mailto:nawnawlinn2@gmail.com">nawnawlinn2@gmail.com</a>
+      <a href="https://discordapp.com/channels/1471146926467584000/1474434107327906023" target="_blank">Join our Discord</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">© animation.web by ILC BCS students</div>
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+    function changeColor(color) {
+        const shirt = document.getElementById("shirt-image");
+        if(color === 'white'){
+            shirt.src = "{{ url_for('static', filename='images/white tshirt.jpg') }}";
+        } else if(color === 'black'){
+            shirt.src = "{{ url_for('static', filename='images/black tshirt.jpg') }}";
+        } else if(color === 'gray'){
+            shirt.src = "{{ url_for('static', filename='images/gray tshirt.jpg') }}";
+        }
+    }
+</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

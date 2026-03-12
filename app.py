@@ -86,8 +86,11 @@ def delete_sticker(id):
 
     return redirect(url_for("browser"))
 
+# ================= T-SHIRT PAGE =================
+@app.route("/tshirt/<sticker_filename>")
+def tshirt(sticker_filename):
+    return render_template("tshirt.html", design=sticker_filename)
 
 # ================= RUN APP =================
-
 if __name__ == "__main__":
     app.run(debug=True)

@@ -29,7 +29,12 @@
     --info-font: "Inter, sans-serif";
     --cute-font: "Fuzzy Bubbles", sans-serif;
 }
-
+html {
+    overflow-x: hidden;
+}
+body {
+    padding-top: 150px; /* same as navbar height */
+}
 /* =============================
    BODY & DEFAULT FONT
 ============================= */
@@ -96,30 +101,32 @@ body.fade-out {
    NAVBAR
 ============================= */
 .navbar {
-    display: flex;
-    justify-content: center;
-    padding: 12px 20px;
-    background: #fff;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    border-radius: 0 0 50px 50px;
-    margin-bottom: 140px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 0 0 20px 20px;
+    padding: 0 15px;
 }
 
 .navdiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* allows wrapping on small screens */
     width: 100%;
     max-width: 1400px;
+    margin: 0 auto;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 1px;
+    gap: 5px;
 }
 
 .nav-logo a {
@@ -132,19 +139,21 @@ body.fade-out {
 .navdiv ul {
     list-style: none;
     display: flex;
-    gap: 35px;
+    flex-wrap: wrap; /* wrap links if needed */
+    gap: 20px;
     font-weight: 600;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     align-items: center;
     padding-left: 0;
+    margin: 0;
 }
 
 .navdiv ul li a {
     text-decoration: none;
     color: var(--text);
-    padding: 8px 18px;
+    padding: 6px 14px;
     border-radius: 20px;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     background: transparent;
 }
 
@@ -157,6 +166,26 @@ body.fade-out {
     height: 45px;
 }
 
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .navdiv ul {
+        flex-direction: column; /* stack links vertically */
+        width: 100%;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-logo a {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navdiv ul li a {
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+}
 /* =============================
    STICKER BUTTON
 ============================= */
@@ -1099,7 +1128,7 @@ body.dark .search-field i {
 /* ================= HEADER ================= */
 
 header {
-    margin-top: 100px;
+    margin-top: 50px;
     padding: 20px;
 }
 
@@ -1127,32 +1156,50 @@ header h1 {
 #uploadInput {
     display: none;
 }
-.button-group {
-    margin-top: 10px;
-    display: flex;
-    gap: 5px;
+.button-group{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:10px;
 }
 
-.download-btn,
-.delete-btn {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
+.btn{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:12px;
+    font-size:14px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    font-weight:500;
+    transition:all 0.25s ease;
 }
 
-.download-btn {
-    background: var(--primary);
-    color: white;
+/* Download button */
+.download{
+    background:rgba(76,175,80,0.1);
+    color:#2e7d32;
 }
 
-.delete-btn {
-    background: #ff4d4d;
-    color: white;
+.download:hover{
+    background:#3a7d3d;
+    color:white;
+    transform:translateY(-2px);
 }
 
+/* Delete button */
+.delete{
+    background:rgba(255,77,77,0.1);
+    color:#c62828;
+}
+
+.delete:hover{
+    background:#ff4d4d;
+    color:white;
+    transform:translateY(-2px);
+}
 /* ================= STICKER GRID ================= */
 
 
@@ -1325,4 +1372,389 @@ header h1 {
 .pagination a:hover {
     background: #727272;
     color: white;
+}
+
+/* ================= T-SHIRT POPUP ================= */
+#orderPopup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+#orderPopup .popup-content {
+    background: linear-gradient(135deg, #fff, #f5f5f5);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border: 2px solid rgb(89, 0, 255);
+    animation: popIn 0.4s ease;
+}
+
+#orderPopup h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 700;
+}
+
+#orderPopup p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+#orderPopup button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    margin: 0 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#orderPopup #yes-btn {
+    background: gold;
+    color: #000;
+}
+
+#orderPopup #yes-btn:hover {
+    background: #ffc107;
+}
+
+#orderPopup #later-btn {
+    background: #333;
+    color: #fff;
+}
+
+#orderPopup #later-btn:hover {
+    background: #555;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes popIn {
+    0% {transform: scale(0.7);}
+    80% {transform: scale(1.05);}
+    100% {transform: scale(1);}
+}
+/* ========================= */
+/* TSHIRT PRODUCT PAGE */
+/* ========================= */
+
+.tshirt-section{
+    padding:90px 8%;
+    background:#f4f6f9;
+}
+
+/* DARK MODE SUPPORT */
+body.dark .tshirt-section{
+    background:#0f172a;
+}
+/* layout */
+
+.product-container{
+    display:flex;
+    gap:40px;
+    align-items:center;
+    max-width:1200px;
+    margin:auto;
+    flex-wrap:wrap;
+}
+
+/* left side */
+
+.image-card{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.08);
+    position:relative;
+}
+
+.shirt-preview{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    margin:auto;
+}
+
+.main-shirt{
+    width:100%;
+}
+
+.sticker-preview{
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%, -50%);
+
+    width:35%;
+    pointer-events:none;
+}
+/* right side */
+
+.product-right{
+    max-width:420px;
+}
+
+.badge{
+    background:#ff4757;
+    color:white;
+    padding:6px 14px;
+    font-size:12px;
+    border-radius:20px;
+}
+
+.product-title{
+    font-size:36px;
+    margin:15px 0;
+}
+
+.product-text{
+    color:#666;
+    line-height:1.7;
+}
+
+/* price */
+
+.price-box{
+    margin:25px 0;
+}
+
+.price{
+    font-size:32px;
+    font-weight:700;
+}
+
+.old-price{
+    text-decoration:line-through;
+    margin-left:10px;
+    color:#999;
+}
+
+/* options */
+
+.option-group{
+    margin-bottom:25px;
+}
+
+.colors{
+    display:flex;
+    gap:12px;
+}
+
+.color{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:2px solid #ddd;
+    cursor:pointer;
+}
+
+.white{background:white;}
+.black{background:black;}
+.gray{background:#777;}
+
+/* size */
+
+.sizes button{
+    padding:10px 16px;
+    border:1px solid #ccc;
+    background:white;
+    border-radius:6px;
+    margin-right:10px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+/* hover effect */
+.sizes button:hover{
+    border-color:#111;
+}
+
+/* when user selects size */
+.sizes button.active{
+    background:#111;
+    color:white;
+    border-color:#111;
+}
+/* buttons */
+
+.action-buttons{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+}
+
+.buy{
+    background:#6b6b6b;
+    color:white;
+    border:none;
+    padding:14px 30px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.buy:hover{
+    background:#333;
+}
+
+.cart{
+    border:2px solid #111;
+    background:white;
+    padding:14px 25px;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.cart:hover{
+    background:#111;
+    color:white;
+}
+
+/* features */
+
+.features{
+    margin-top:20px;
+    color:#555;
+    font-size:14px;
+}
+
+
+/* Payment box */
+/* OVERLAY */
+
+.checkout-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.65);
+backdrop-filter:blur(8px);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+
+/* BOX */
+
+.checkout-box{
+
+width:500px;
+padding:35px;
+border-radius:20px;
+
+background:var(--popup-bg);
+
+color:var(--popup-text);
+
+box-shadow:0 25px 70px rgba(0,0,0,0.35);
+
+}
+
+
+/* HEADER */
+
+.checkout-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.close-checkout{
+cursor:pointer;
+font-size:18px;
+}
+
+
+/* PAYMENT GRID */
+
+.payment-grid{
+
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:15px;
+
+margin-top:20px;
+}
+
+
+.payment-card{
+
+background:#f4f4f4;
+
+border-radius:12px;
+
+padding:15px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+
+.payment-card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+
+.payment-card img{
+height:40px;
+margin-bottom:8px;
+}
+
+
+/* QR SECTION */
+
+.qr-section{
+margin-top:25px;
+text-align:center;
+}
+
+.qr-image{
+width:180px;
+margin:15px 0;
+}
+
+.qr-instruction{
+font-size:14px;
+line-height:1.6;
+}
+
+.payment-note{
+font-size:12px;
+color:#888;
+}
+
+
+/* DARK MODE */
+
+body.dark .payment-card{
+background:#2a2a2a;
+}
+
+body.dark .checkout-box{
+background:#1f1f1f;
+color:white;
 }
