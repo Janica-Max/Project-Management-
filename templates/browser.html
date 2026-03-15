@@ -97,12 +97,13 @@
 <!-- ================= UPLOAD SECTION ================= -->
 
 <div class="controls">
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <label for="uploadInput" class="custom-file-upload">
-            + Upload New Sticker
-        </label>
-        <input type="file" id="uploadInput" name="file" accept="image/*" onchange="this.form.submit()">
-    </form>
+    <!-- Hidden upload -->
+    <input type="file" id="uploadInput" name="file" accept="image/*" hidden>
+
+    <!-- Floating camera button -->
+    <div class="upload-btn" onclick="document.getElementById('uploadInput').click()">
+        <i class="fa-solid fa-camera"></i>
+    </div>
 
     <!-- Category Filter Buttons -->
     <div class="category-buttons">
@@ -244,5 +245,18 @@ document.getElementById("later-btn").addEventListener("click", closePopup);
     <script src="/static/muv.min.js"></script>
     <script src="scripts/transition.js"></script>
     <script src="/static/script.js"></script>
+
+<div id="uploadModal" class="upload-modal">
+    <div class="upload-box">
+        <h3>Change Image Name</h3>
+        <img id="previewImage">
+        <input type="text" id="imageName" placeholder="Sticker Name">
+        <div class="upload-actions">
+            <button onclick="closeUpload">Cancel</button>
+            <button onclick="uploadSticker">Save</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

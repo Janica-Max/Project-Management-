@@ -18,7 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const yesBtn = document.getElementById("yes-btn");
     const laterBtn = document.getElementById("later-btn");
 
-    let selectedSticker = "";
+    let selectedSticker = "null";
+
+    const uploadInput = document.getElementById("uploadInput");
+    const uploadModal = document.getElementById("uploadModal");
+    const previewImage = document.getElementById("previewImage");
+    const imageNameInput = document.getElementById("imageName");
 
     // =======================
     // DARK MODE
@@ -87,6 +92,87 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // When file selected
+    if(uploadInput){
+
+    uploadInput.addEventListener("change", function(e){
+
+    selectedFile = e.target.files[0];
+
+    if(!selectedFile) return;
+
+    let reader = new FileReader();
+
+    reader.onload = function(event){
+
+    previewImage.src = event.target.result;
+
+    }
+
+    reader.readAsDataURL(selectedFile);
+
+    // default name
+    imageNameInput.value = selectedFile.name.split(".")[0];
+
+    uploadModal.style.display = "flex";
+
+    });
+
+    }
+
+    // close upload modal
+    function closeUpload(){
+
+    uploadModal.style.display = "none";
+
+    }
+
+    // upload to flask
+    function uploadSticker(){
+
+    if(!selectedFile) return;
+
+    let formData = new FormData();
+
+    formData.append("file", selectedFile);
+    formData.append("name", imageNameInput.value);
+
+    fetch("/upload",{
+
+    method:"POST",
+    body:formData
+
+    })
+    .then(res=>res.json())
+    .then(data=>{
+
+    if(data.success){
+
+    // create new card instantly
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+    <img src="/static/uploads/${data.filename}">
+    <h3>${imageNameInput.value}</h3>
+
+    <div class="button-group">
+    <a href="/static/uploads/${data.filename}" download class="btn download">
+    <i class="fa-solid fa-download"></i>
+    <span>Download</span>
+    </a>
+    </div>
+    `;
+
+    stickerContainer.prepend(card);
+
+    }
+
+    uploadModal.style.display = "none";
+
+    });
+
+    }
     // =======================
     // MODAL
     // =======================

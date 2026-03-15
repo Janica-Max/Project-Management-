@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
@@ -9,6 +9,7 @@ app = Flask(__name__)
 # ================= CONFIG =================
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(BASE_DIR, "database.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = os.path.join(BASE_DIR, "static", "uploads")
@@ -51,11 +52,17 @@ def browser():
         for folder in folders:
             folder_path = os.path.join(app.config["UPLOAD_FOLDER"], folder)
             if os.path.exists(folder_path):
-                all_stickers += [f"{folder}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+                all_stickers += [
+                    f"{folder}/{f}" for f in os.listdir(folder_path)
+                    if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))
+                ]
     else:
         folder_path = os.path.join(app.config["UPLOAD_FOLDER"], category)
         if os.path.exists(folder_path):
-            all_stickers = [f"{category}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+            all_stickers = [
+                f"{category}/{f}" for f in os.listdir(folder_path)
+                if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))
+            ]
 
     # Pagination
     total = len(all_stickers)
@@ -74,6 +81,7 @@ def browser():
 
 @app.route("/get_stickers")
 def get_stickers():
+
     category = request.args.get("category", "All")
     folders = ["Anime", "Animals", "Cute", "Couple", "Handmade"]
 
@@ -83,39 +91,65 @@ def get_stickers():
         for folder in folders:
             folder_path = os.path.join(app.config["UPLOAD_FOLDER"], folder)
             if os.path.exists(folder_path):
-                stickers += [f"{folder}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+                stickers += [
+                    f"{folder}/{f}" for f in os.listdir(folder_path)
+                    if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))
+                ]
     else:
         folder_path = os.path.join(app.config["UPLOAD_FOLDER"], category)
         if os.path.exists(folder_path):
-            stickers = [f"{category}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+            stickers = [
+                f"{category}/{f}" for f in os.listdir(folder_path)
+                if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))
+            ]
 
     return {"stickers": stickers}
+
+
+# ================= FIXED UPLOAD =================
+
 @app.route("/upload", methods=["POST"])
 def upload_file():
+
     if "file" not in request.files:
-        return redirect(url_for("browser"))
+        return jsonify({"error":"No file"})
 
     file = request.files["file"]
+    name = request.form.get("name","sticker")
 
     if file.filename == "":
-        return redirect(url_for("browser"))
+        return jsonify({"error":"Empty filename"})
 
-    filename = secure_filename(file.filename)
+    ext = os.path.splitext(file.filename)[1]
+
+    filename = secure_filename(name + ext)
+
     unique_name = f"{uuid.uuid4().hex}_{filename}"
 
-    file.save(os.path.join(app.config["UPLOAD_FOLDER"], unique_name))
+    save_path = os.path.join(app.config["UPLOAD_FOLDER"], unique_name)
+
+    file.save(save_path)
 
     new_sticker = Sticker(filename=unique_name)
+
     db.session.add(new_sticker)
     db.session.commit()
 
-    return redirect(url_for("browser"))
+    return jsonify({
+        "success":True,
+        "filename":unique_name
+    })
 
+
+# ================= DELETE =================
 
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete_sticker(id):
+
     sticker = Sticker.query.get_or_404(id)
+
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], sticker.filename)
+
     if os.path.exists(file_path):
         os.remove(file_path)
 
@@ -124,12 +158,15 @@ def delete_sticker(id):
 
     return redirect(url_for("browser"))
 
-# ================= T-SHIRT PAGE =================
+
+# ================= TSHIRT =================
 @app.route("/tshirt/<path:sticker_filename>")
 def tshirt(sticker_filename):
+
     return render_template("tshirt.html", design=sticker_filename)
 
-# ================= RUN APP =================
+
+# ================= RUN =================
+
 if __name__ == "__main__":
     app.run(debug=True)
-
