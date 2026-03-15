@@ -1416,7 +1416,7 @@ header h1 {
     }
 
     .nav-links {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .nav-links li {

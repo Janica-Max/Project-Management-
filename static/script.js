@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const body = document.body;
+
     const modeToggle = document.querySelector(".dark-light");
     const searchToggle = document.querySelector(".searchToggle");
     const searchField = document.querySelector(".search-field");
     const searchInput = document.getElementById("searchInput");
+
     const nav = document.querySelector("nav");
     const sidebarOpen = document.querySelector(".siderbarOpen");
     const sidebarClose = document.querySelector(".siderbarClose");
@@ -12,22 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modalImage");
     const closeBtn = document.querySelector(".close");
+
     const stickerContainer = document.getElementById("stickerContainer");
 
     const orderPopup = document.getElementById("orderPopup");
     const yesBtn = document.getElementById("yes-btn");
     const laterBtn = document.getElementById("later-btn");
 
-    let selectedSticker = "null";
-
     const uploadInput = document.getElementById("uploadInput");
     const uploadModal = document.getElementById("uploadModal");
     const previewImage = document.getElementById("previewImage");
     const imageNameInput = document.getElementById("imageName");
+    const imageCategory = document.getElementById("imageCategory");
 
-    // =======================
-    // DARK MODE
-    // =======================
+    let selectedFile = null;
+    let selectedSticker = "";
+
     if (localStorage.getItem("mode") === "dark-mode") {
         body.classList.add("dark");
         if (modeToggle) modeToggle.classList.add("active");
@@ -35,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (modeToggle) {
         modeToggle.addEventListener("click", () => {
-
             body.classList.toggle("dark");
             modeToggle.classList.toggle("active");
 
@@ -44,13 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 localStorage.setItem("mode", "light-mode");
             }
-
         });
     }
 
-    // =======================
-    // SEARCH TOGGLE
-    // =======================
     if (searchToggle && searchField) {
         searchToggle.addEventListener("click", () => {
             searchToggle.classList.toggle("active");
@@ -58,313 +54,264 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // =======================
-    // SIDEBAR
-    // =======================
-    if (sidebarOpen && nav) {
+    if (sidebarOpen) {
         sidebarOpen.addEventListener("click", () => nav.classList.add("active"));
     }
 
-    if (sidebarClose && nav) {
+    if (sidebarClose) {
         sidebarClose.addEventListener("click", () => nav.classList.remove("active"));
     }
 
-    // =======================
-    // LIVE SEARCH
-    // =======================
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
-
             const term = e.target.value.toLowerCase();
 
             document.querySelectorAll(".card").forEach(card => {
-
                 const title = card.querySelector("h3").innerText.toLowerCase();
-
-                if (title.includes(term)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-
+                card.style.display = title.includes(term) ? "block" : "none";
             });
-
         });
     }
 
-    // When file selected
-    if(uploadInput){
+    if (uploadInput) {
+        uploadInput.addEventListener("change", (e) => {
+            selectedFile = e.target.files[0];
+            if (!selectedFile) return;
 
-    uploadInput.addEventListener("change", function(e){
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                previewImage.src = event.target.result;
+            };
+            reader.readAsDataURL(selectedFile);
 
-    selectedFile = e.target.files[0];
-
-    if(!selectedFile) return;
-
-    let reader = new FileReader();
-
-    reader.onload = function(event){
-
-    previewImage.src = event.target.result;
-
+            imageNameInput.value = selectedFile.name.split(".")[0];
+            uploadModal.style.display = "flex";
+        });
     }
 
-    reader.readAsDataURL(selectedFile);
+    window.closeUpload = function () {
+        uploadModal.style.display = "none";
+        uploadInput.value = "";
+        selectedFile = null;
+        previewImage.src = "";
+        imageNameInput.value = "";
+        imageCategory.value = "Anime";
+    };
 
-    // default name
-    imageNameInput.value = selectedFile.name.split(".")[0];
-
-    uploadModal.style.display = "flex";
-
-    });
-
-    }
-
-    // close upload modal
-    function closeUpload(){
-
-    uploadModal.style.display = "none";
-
-    }
-
-    // upload to flask
-    function uploadSticker(){
-
-    if(!selectedFile) return;
-
-    let formData = new FormData();
-
-    formData.append("file", selectedFile);
-    formData.append("name", imageNameInput.value);
-
-    fetch("/upload",{
-
-    method:"POST",
-    body:formData
-
-    })
-    .then(res=>res.json())
-    .then(data=>{
-
-    if(data.success){
-
-    // create new card instantly
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-    <img src="/static/uploads/${data.filename}">
-    <h3>${imageNameInput.value}</h3>
-
-    <div class="button-group">
-    <a href="/static/uploads/${data.filename}" download class="btn download">
-    <i class="fa-solid fa-download"></i>
-    <span>Download</span>
-    </a>
-    </div>
-    `;
-
-    stickerContainer.prepend(card);
-
-    }
-
-    uploadModal.style.display = "none";
-
-    });
-
-    }
-    // =======================
-    // MODAL
-    // =======================
-    if (stickerContainer && modal && modalImg) {
-
-        stickerContainer.addEventListener("click", (e) => {
-
-            if (e.target.tagName === "IMG") {
-
-                modal.classList.add("active");
-                modalImg.src = e.target.src;
-
+    window.uploadSticker = async function () {
+        try {
+            if (!selectedFile) {
+                alert("Please choose an image first.");
+                return;
             }
 
-        });
+            const stickerName = imageNameInput.value.trim();
+            if (!stickerName) {
+                alert("Please enter sticker name.");
+                return;
+            }
 
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            formData.append("name", stickerName);
+            formData.append("category", imageCategory.value);
+
+            const res = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const text = await res.text();
+
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.error("Server returned non-JSON:", text);
+                throw new Error("Server error: " + text.substring(0, 200));
+            }
+
+            if (!res.ok || !data.success) {
+                throw new Error(data.error || "Upload failed");
+            }
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+                <img src="/static/uploads/${data.filepath}" alt="${data.name}">
+                <h3>${data.name}</h3>
+                <div class="button-group">
+                    <a href="/static/uploads/${data.filepath}"
+                       download
+                       class="btn download"
+                       onclick="showOrderPopup('${data.filepath}')">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download</span>
+                    </a>
+                </div>
+            `;
+
+            if (stickerContainer) {
+                stickerContainer.prepend(card);
+            }
+
+            closeUpload();
+        } catch (error) {
+            console.error(error);
+            alert(error.message);
+        }
+    };
+
+    if (stickerContainer) {
+        stickerContainer.addEventListener("click", (e) => {
+            if (e.target.tagName === "IMG") {
+                modal.classList.add("active");
+                modalImg.src = e.target.src;
+            }
+        });
     }
 
-    if (closeBtn && modal) {
-        closeBtn.addEventListener("click", () => modal.classList.remove("active"));
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            modal.classList.remove("active");
+        });
     }
 
     if (modal) {
         modal.addEventListener("click", (e) => {
-
             if (e.target === modal) {
                 modal.classList.remove("active");
             }
-
         });
     }
 
     document.addEventListener("keydown", (e) => {
-
-        if (e.key === "Escape" && modal) {
+        if (e.key === "Escape") {
             modal.classList.remove("active");
         }
-
     });
 
-    // =======================
-    // TSHIRT POPUP
-    // =======================
-    window.showOrderPopup = function(sticker){
-
+    window.showOrderPopup = function (sticker) {
         selectedSticker = encodeURIComponent(sticker);
-
-        if(orderPopup){
+        if (orderPopup) {
             orderPopup.style.display = "flex";
         }
+    };
 
-    }
-
-    window.closePopup = function(){
-
-        if(orderPopup){
+    window.closePopup = function () {
+        if (orderPopup) {
             orderPopup.style.display = "none";
         }
+    };
 
-    }
-
-    window.goToShirt = function(){
-
-        if(selectedSticker !== ""){
+    window.goToShirt = function () {
+        if (selectedSticker !== "") {
             window.location.href = `/tshirt/${selectedSticker}`;
         }
+    };
 
-    }
+    if (yesBtn) yesBtn.addEventListener("click", goToShirt);
+    if (laterBtn) laterBtn.addEventListener("click", closePopup);
 
-    if(yesBtn){
-        yesBtn.addEventListener("click", goToShirt);
-    }
-
-    if(laterBtn){
-        laterBtn.addEventListener("click", closePopup);
-    }
-
-    // =======================
-    // CATEGORY FILTER
-    // =======================
     const categoryButtons = document.querySelectorAll(".category-btn");
 
     categoryButtons.forEach(btn => {
-        btn.addEventListener("click", (e) => {
+        btn.addEventListener("click", async (e) => {
             e.preventDefault();
 
-            // Get category from data attribute or button text
-            const category = btn.dataset.category || btn.textContent;
+            const category = btn.dataset.category;
 
-            // Remove 'active' class from all buttons and add to clicked
             categoryButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            // Fetch stickers for this category
-            fetch(`/get_stickers?category=${category}`)
-                .then(res => res.json())
-                .then(data => {
-                    stickerContainer.innerHTML = "";
+            try {
+                const res = await fetch(`/get_stickers?category=${encodeURIComponent(category)}`);
+                const data = await res.json();
 
-                    data.stickers.forEach(sticker => {
-                        const card = document.createElement("div");
-                        card.className = "card";
+                stickerContainer.innerHTML = "";
 
-                        card.innerHTML = `
-                            <img src="/static/uploads/${sticker}"> 
-                            <h3>${sticker.split('/')[1]}</h3>
-                            <div class="button-group">
-                                <a href="/static/uploads/${category}/${sticker}" download class="btn download" onclick="showOrderPopup('${sticker}')">
-                                    <i class="fa-solid fa-download"></i>
-                                    <span>Download</span>
-                                </a>
-                            </div>
-                        `;
-                        stickerContainer.appendChild(card);
-                    });
+                data.stickers.forEach(sticker => {
+                    const stickerName = sticker.split("/").pop().replace(/\.(png|jpg|jpeg|gif)$/i, "");
+
+                    const card = document.createElement("div");
+                    card.className = "card";
+
+                    card.innerHTML = `
+                        <img src="/static/uploads/${sticker}" alt="${stickerName}">
+                        <h3>${stickerName}</h3>
+                        <div class="button-group">
+                            <a href="/static/uploads/${sticker}"
+                               download
+                               class="btn download"
+                               onclick="showOrderPopup('${sticker}')">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Download</span>
+                            </a>
+                        </div>
+                    `;
+
+                    stickerContainer.appendChild(card);
                 });
+
+                const pagination = document.getElementById("pagination");
+                if (pagination) {
+                    pagination.style.display = category === "All" ? "block" : "none";
+                }
+            } catch (err) {
+                console.error(err);
+            }
         });
     });
-
-    // Load "All" stickers initially
-    loadStickers("All");
-
 });
 
-// =======================
-// SIZE SELECTOR
-// =======================
-function selectSize(button){
-
+function selectSize(button) {
     const sizes = document.querySelectorAll(".sizes button");
-
-    sizes.forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
+    sizes.forEach(btn => btn.classList.remove("active"));
     button.classList.add("active");
-
 }
 
-// OPEN CHECKOUT
-function openPayment(){
-    document.getElementById("paymentModal").style.display = "flex";
+function openPayment() {
+    const paymentModal = document.getElementById("paymentModal");
+    if (paymentModal) paymentModal.style.display = "flex";
 }
 
-// CLOSE
-function closePayment(){
-    document.getElementById("paymentModal").style.display = "none";
+function closePayment() {
+    const paymentModal = document.getElementById("paymentModal");
+    if (paymentModal) paymentModal.style.display = "none";
 }
 
-// SHOW QR PAYMENT
-function showQR(method){
-
+function showQR(method) {
     const qr = document.getElementById("qrSection");
+    if (!qr) return;
 
     let img = "";
     let name = "";
 
-    if(method === "kbz"){
+    if (method === "kbz") {
         img = "/static/payments/My QR.png";
         name = "KBZPay";
-    }
-
-    if(method === "aya"){
+    } else if (method === "aya") {
         img = "/static/payments/My QR.png";
         name = "AYA Pay";
-    }
-
-    if(method === "city"){
+    } else if (method === "city") {
         img = "/static/payments/My QR.png";
         name = "City Pay";
     }
 
     qr.innerHTML = `
-    
-    <div class="qr-box">
-
-        <h3>Pay with ${name}</h3>
-
-        <img src="${img}" class="qr-image">
-
-        <p class="qr-instruction">
-        1. Open your ${name} app<br>
-        2. Tap "Scan QR"<br>
-        3. Scan this code<br>
-        4. Complete the payment
-        </p>
-
-        <p class="payment-note">
-        After payment please send screenshot to our email.
-        </p>
-
-    </div>
-
+        <div class="qr-box">
+            <h3>Pay with ${name}</h3>
+            <img src="${img}" class="qr-image" alt="${name} QR">
+            <p class="qr-instruction">
+                1. Open your ${name} app<br>
+                2. Tap Scan QR<br>
+                3. Scan this code<br>
+                4. Complete payment
+            </p>
+            <p class="payment-note">
+                After payment send screenshot to our email
+            </p>
+        </div>
     `;
 }
