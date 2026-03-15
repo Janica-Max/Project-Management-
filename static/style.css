@@ -1357,7 +1357,7 @@ header h1 {
     text-align: center;
 }
 
-.pagination a {
+.pagination a{
     display: inline-block;
     padding: 8px 14px;
     margin: 5px;
@@ -1757,4 +1757,31 @@ background:#2a2a2a;
 body.dark .checkout-box{
 background:#1f1f1f;
 color:white;
+}
+
+.category-buttons {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.category-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 3px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.category-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.category-btn.active {
+    background-color: #333;
+    color: #fff;
 }

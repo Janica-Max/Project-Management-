@@ -60,14 +60,12 @@
     <h1>Welcome To Sticker Glory</h1>
 </header>
 
-<!-- ================= VIDEOS SECTION ================= -->
-
 <section id="videos">
     <div class="container">
 
         <article>
-            <video controls poster="/static/poster/video-1-poster.webp">
-                <source src="/static/poster/video-1.mp4" type="video/mp4">
+            <video controls autoplay muted loop>
+                <source src="/static/medias/Drawing.mp4" type="video/mp4">
             </video>
             <h3>Game Tutorial 1</h3>
         </article>
@@ -103,66 +101,68 @@
         <label for="uploadInput" class="custom-file-upload">
             + Upload New Sticker
         </label>
-        <input type="file"
-               id="uploadInput"
-               name="file"
-               accept="image/*"
-               onchange="this.form.submit()">
+        <input type="file" id="uploadInput" name="file" accept="image/*" onchange="this.form.submit()">
     </form>
-</div>
 
+    <!-- Category Filter Buttons -->
+    <div class="category-buttons">
+    {% set categories = ['All', 'Anime', 'Animals', 'Cute', 'Couple', 'Handmade'] %}
+    {% for cat in categories %}
+        <a href="javascript:void(0)"
+           class="category-btn {% if selected_category == cat %}active{% endif %}"
+           data-category="{{ cat }}">
+           {{ cat }}
+        </a>
+    {% endfor %}
+</div>
+</div>
 <!-- ================= STICKER GRID ================= -->
 <div id="stickerContainer">
-    {% for sticker in stickers.items %}
+    {% for sticker in stickers%}
         <div class="card">
-            <img src="{{ url_for('static', filename='uploads/' + sticker.filename) }}" alt="Sticker">
-            <h3>{{ sticker.filename }}</h3>
+            <img src="{{ url_for('static', filename='uploads/' + sticker) }}" alt="{{ sticker.split('/')[-1].replace('.png','').replace('.jpg','').replace('.jpeg','').replace('.gif','') }}">
+           <h3>
+{{ sticker.split('/')[-1].replace('.png','').replace('.jpg','').replace('.jpeg','').replace('.gif','') }}
+</h3>
 
            <div class="button-group">
 
     <!-- Download -->
-<a href="{{ url_for('static', filename='uploads/' + sticker.filename) }}"
+<a href="{{ url_for('static', filename='uploads/' + sticker) }}"
    download
-   onclick="showOrderPopup('{{ sticker.filename }}')"
+   onclick="showOrderPopup('{{ sticker }}')"
    class="btn download">
 
    <i class="fa-solid fa-download"></i>
    <span>Download</span>
 
 </a>
-
-    <!-- Delete -->
-    <form action="/delete/{{ sticker.id }}" method="POST">
-        <button type="submit" class="btn delete">
-            <i class="fa-solid fa-trash"></i>
-            <span>Delete</span>
-        </button>
-    </form>
-
 </div>
         </div>
     {% endfor %}
 </div>
-   <div class="pagination">
+   <div id="pagination" class="pagination">
 
-    {% if stickers.has_prev %}
-        <a href="{{ url_for('browser', page=stickers.prev_num) }}">Previous</a>
-    {% endif %}
+{% if page > 1 %}
+<a href="{{ url_for('browser', category=selected_category, page=page-1) }}">
+Previous
+</a>
+{% endif %}
 
-    {% for page_num in stickers.iter_pages() %}
-        {% if page_num %}
-            <a href="{{ url_for('browser', page=page_num) }}">
-                {{ page_num }}
-            </a>
-        {% endif %}
-    {% endfor %}
+{% for p in range(1, total_pages + 1) %}
+<a href="{{ url_for('browser', category=selected_category, page=p) }}"
+class="{% if p == page %}active{% endif %}">
+{{ p }}
+</a>
+{% endfor %}
 
-    {% if stickers.has_next %}
-        <a href="{{ url_for('browser', page=stickers.next_num) }}">Next</a>
-    {% endif %}
+{% if page < total_pages %}
+<a href="{{ url_for('browser', category=selected_category, page=page+1) }}">
+Next
+</a>
+{% endif %}
 
 </div>
-
 <!-- Modal (OUTSIDE the grid) -->
 <div id="modal">
     <span class="close">&times;</span>

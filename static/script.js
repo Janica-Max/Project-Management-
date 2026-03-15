@@ -164,8 +164,52 @@ document.addEventListener("DOMContentLoaded", () => {
         laterBtn.addEventListener("click", closePopup);
     }
 
-});
+    // =======================
+    // CATEGORY FILTER
+    // =======================
+    const categoryButtons = document.querySelectorAll(".category-btn");
 
+    categoryButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Get category from data attribute or button text
+            const category = btn.dataset.category || btn.textContent;
+
+            // Remove 'active' class from all buttons and add to clicked
+            categoryButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            // Fetch stickers for this category
+            fetch(`/get_stickers?category=${category}`)
+                .then(res => res.json())
+                .then(data => {
+                    stickerContainer.innerHTML = "";
+
+                    data.stickers.forEach(sticker => {
+                        const card = document.createElement("div");
+                        card.className = "card";
+
+                        card.innerHTML = `
+                            <img src="/static/uploads/${sticker}"> 
+                            <h3>${sticker.split('/')[1]}</h3>
+                            <div class="button-group">
+                                <a href="/static/uploads/${category}/${sticker}" download class="btn download" onclick="showOrderPopup('${sticker}')">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Download</span>
+                                </a>
+                            </div>
+                        `;
+                        stickerContainer.appendChild(card);
+                    });
+                });
+        });
+    });
+
+    // Load "All" stickers initially
+    loadStickers("All");
+
+});
 
 // =======================
 // SIZE SELECTOR
@@ -181,25 +225,18 @@ function selectSize(button){
     button.classList.add("active");
 
 }
+
 // OPEN CHECKOUT
-
 function openPayment(){
-
     document.getElementById("paymentModal").style.display = "flex";
-
 }
 
 // CLOSE
-
 function closePayment(){
-
     document.getElementById("paymentModal").style.display = "none";
-
 }
 
-
 // SHOW QR PAYMENT
-
 function showQR(method){
 
     const qr = document.getElementById("qrSection");
@@ -244,5 +281,4 @@ function showQR(method){
     </div>
 
     `;
-
 }

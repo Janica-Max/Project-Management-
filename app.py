@@ -40,17 +40,56 @@ def about():
 
 @app.route("/browser")
 def browser():
+    category = request.args.get("category", "All")
     page = request.args.get("page", 1, type=int)
     per_page = 8
 
-    stickers = Sticker.query.order_by(Sticker.id.desc()).paginate(
+    folders = ["Anime", "Animals", "Cute", "Couple", "Handmade"]
+    all_stickers = []
+
+    if category == "All":
+        for folder in folders:
+            folder_path = os.path.join(app.config["UPLOAD_FOLDER"], folder)
+            if os.path.exists(folder_path):
+                all_stickers += [f"{folder}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+    else:
+        folder_path = os.path.join(app.config["UPLOAD_FOLDER"], category)
+        if os.path.exists(folder_path):
+            all_stickers = [f"{category}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+
+    # Pagination
+    total = len(all_stickers)
+    total_pages = (total + per_page - 1) // per_page
+    start = (page - 1) * per_page
+    end = start + per_page
+    stickers_page = all_stickers[start:end]
+
+    return render_template(
+        "browser.html",
+        stickers=stickers_page,
+        selected_category=category,
         page=page,
-        per_page=per_page
+        total_pages=total_pages
     )
 
-    return render_template("browser.html", stickers=stickers)
+@app.route("/get_stickers")
+def get_stickers():
+    category = request.args.get("category", "All")
+    folders = ["Anime", "Animals", "Cute", "Couple", "Handmade"]
 
+    stickers = []
 
+    if category == "All":
+        for folder in folders:
+            folder_path = os.path.join(app.config["UPLOAD_FOLDER"], folder)
+            if os.path.exists(folder_path):
+                stickers += [f"{folder}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+    else:
+        folder_path = os.path.join(app.config["UPLOAD_FOLDER"], category)
+        if os.path.exists(folder_path):
+            stickers = [f"{category}/{f}" for f in os.listdir(folder_path) if f.lower().endswith(('.png','.jpg','.jpeg','.gif'))]
+
+    return {"stickers": stickers}
 @app.route("/upload", methods=["POST"])
 def upload_file():
     if "file" not in request.files:
@@ -76,7 +115,6 @@ def upload_file():
 @app.route("/delete/<int:id>", methods=["POST"])
 def delete_sticker(id):
     sticker = Sticker.query.get_or_404(id)
-
     file_path = os.path.join(app.config["UPLOAD_FOLDER"], sticker.filename)
     if os.path.exists(file_path):
         os.remove(file_path)
@@ -87,10 +125,11 @@ def delete_sticker(id):
     return redirect(url_for("browser"))
 
 # ================= T-SHIRT PAGE =================
-@app.route("/tshirt/<sticker_filename>")
+@app.route("/tshirt/<path:sticker_filename>")
 def tshirt(sticker_filename):
     return render_template("tshirt.html", design=sticker_filename)
 
 # ================= RUN APP =================
 if __name__ == "__main__":
     app.run(debug=True)
+
