@@ -16,11 +16,13 @@
 <body>
 
 <nav class="navbar">
+    <!-- LEFT: Logo -->
     <div class="nav-logo">
         <img src="/static/images/a-removebg-preview.png" class="logo">
-        <a href="#">Animation Website</a>
+        <a href="#">nimation Website</a>
     </div>
 
+    <!-- CENTER: Links + Search + Dark/Light -->
     <div class="nav-center">
         <ul class="nav-links">
             <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -28,17 +30,19 @@
         </ul>
 
         <div class="darkLight-searchBox">
-            <div class="searchBox">
-                <div class="searchToggle">
-                    <i class='bx bx-x bx-icon cancel'></i>
-                    <i class='bx bx-search bx-icon search'></i>
-                </div>
-                <div class="search-field">
-                    <input type="text" id="searchInput" placeholder="Search stickers...">
-                    <i class='bx bx-search'></i>
-                </div>
-            </div>
+            <!-- Search -->
+                <div class="searchBox">
+        <div class="searchToggle">
+            <i class='bx bx-x bx-icon cancel'></i>
+            <i class='bx bx-search bx-icon search'></i>
+        </div>
+        <div class="search-field">
+            <input type="text" id="searchInput" placeholder="Search stickers...">
+            <i class='bx bx-search'></i>
+        </div>
+    </div>
 
+            <!-- Dark/Light toggle -->
             <div class="dark-light">
                 <i class='bx bx-moon moon'></i>
                 <i class='bx bx-sun sun'></i>

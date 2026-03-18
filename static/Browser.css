@@ -4,8 +4,10 @@
 :root {
     --primary: #6c63ff;
     --primary-dark: #574fe0;
+    --last:#ae00ff; 
+    --secondary: #6C63FF;
     --accent: #ff6ec7;
-
+    --fill:#6c63ff; 
     --body-color: #ffffff;
     --card-bg: #ffffff;
     --text-color: #222222;
@@ -93,7 +95,7 @@ p, span, li, small {
     background: var(--nav-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--last);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -118,8 +120,28 @@ p, span, li, small {
 .nav-center {
     display: flex;
     align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
+    gap: 15px;
+    border: 2px solid var(--last);
+    border-radius: 50px;
+    padding: 8px 20px;
+}
+
+/* LINKS */
+.nav-center .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-center .nav-links li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-center .nav-links li a:hover {
+    color: var(--last);
 }
 
 .nav-links {
@@ -137,8 +159,7 @@ p, span, li, small {
 }
 
 .nav-links li a:hover {
-    background: var(--primary);
-    color: #ffffff;
+    color: var(--last);
 }
 
 /* =========================
@@ -159,7 +180,7 @@ p, span, li, small {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    border: 2px solid var(--primary);
+    border: 2px solid var(--last);
     display: flex;
     justify-content: center;
     align-items: center;
