@@ -16,13 +16,11 @@
 <body>
 
 <nav class="navbar">
-    <!-- LEFT: Logo -->
     <div class="nav-logo">
-        <img src="/static/images/a-removebg-preview.png" class="logo">
+        <img src="/static/images/a-removebg-preview.png" class="logo" alt="Logo">
         <a href="#">nimation Website</a>
     </div>
 
-    <!-- CENTER: Links + Search + Dark/Light -->
     <div class="nav-center">
         <ul class="nav-links">
             <li><a href="{{ url_for('home') }}">Home</a></li>
@@ -30,19 +28,17 @@
         </ul>
 
         <div class="darkLight-searchBox">
-            <!-- Search -->
-                <div class="searchBox">
-        <div class="searchToggle">
-            <i class='bx bx-x bx-icon cancel'></i>
-            <i class='bx bx-search bx-icon search'></i>
-        </div>
-        <div class="search-field">
-            <input type="text" id="searchInput" placeholder="Search stickers...">
-            <i class='bx bx-search'></i>
-        </div>
-    </div>
+            <div class="searchBox">
+                <div class="searchToggle">
+                    <i class='bx bx-x bx-icon cancel'></i>
+                    <i class='bx bx-search bx-icon search'></i>
+                </div>
+                <div class="search-field">
+                    <input type="text" id="searchInput" placeholder="Search stickers...">
+                    <i class='bx bx-search'></i>
+                </div>
+            </div>
 
-            <!-- Dark/Light toggle -->
             <div class="dark-light">
                 <i class='bx bx-moon moon'></i>
                 <i class='bx bx-sun sun'></i>
@@ -68,7 +64,7 @@
             <video controls poster="/static/poster/ANimation-poster.webp">
                 <source src="/static/poster/video-2.mp4" type="video/mp4">
             </video>
-            <h3>Drawing Tutorial/h3>
+            <h3>Drawing Tutorial</h3>
         </article>
 
         <article>
@@ -113,13 +109,13 @@
             <img src="{{ url_for('static', filename='uploads/' + sticker) }}" alt="{{ sticker_name }}">
             <h3>{{ sticker_name }}</h3>
 
-            <div class="button-group">
+            <div class="download-row">
                 <a href="{{ url_for('static', filename='uploads/' + sticker) }}"
                    download
-                   class="btn download"
+                   class="download-meta"
                    onclick="showOrderPopup('{{ sticker }}')">
                     <i class="fa-solid fa-download"></i>
-                    <span>Download</span>
+                    <span>2.0K</span>
                 </a>
             </div>
         </div>

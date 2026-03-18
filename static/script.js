@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("searchInput");
 
     const nav = document.querySelector("nav");
-    const sidebarOpen = document.querySelector(".siderbarOpen");
-    const sidebarClose = document.querySelector(".siderbarClose");
 
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modalImage");
@@ -28,6 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedFile = null;
     let selectedSticker = "";
+
+    function createCardHTML(filePath, name) {
+        return `
+            <img src="/static/uploads/${filePath}" alt="${name}">
+            <h3>${name}</h3>
+            <div class="download-row">
+                <a href="/static/uploads/${filePath}"
+                   download
+                   class="download-meta"
+                   onclick="showOrderPopup('${filePath}')">
+                    <i class="fa-solid fa-download"></i>
+                    <span>2.0K</span>
+                </a>
+            </div>
+        `;
+    }
 
     if (localStorage.getItem("mode") === "dark-mode") {
         body.classList.add("dark");
@@ -52,14 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
             searchToggle.classList.toggle("active");
             searchField.classList.toggle("active");
         });
-    }
-
-    if (sidebarOpen) {
-        sidebarOpen.addEventListener("click", () => nav.classList.add("active"));
-    }
-
-    if (sidebarClose) {
-        sidebarClose.addEventListener("click", () => nav.classList.remove("active"));
     }
 
     if (searchInput) {
@@ -137,20 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const card = document.createElement("div");
             card.className = "card";
-
-            card.innerHTML = `
-                <img src="/static/uploads/${data.filepath}" alt="${data.name}">
-                <h3>${data.name}</h3>
-                <div class="button-group">
-                    <a href="/static/uploads/${data.filepath}"
-                       download
-                       class="btn download"
-                       onclick="showOrderPopup('${data.filepath}')">
-                        <i class="fa-solid fa-download"></i>
-                        <span>Download</span>
-                    </a>
-                </div>
-            `;
+            card.innerHTML = createCardHTML(data.filepath, data.name);
 
             if (stickerContainer) {
                 stickerContainer.prepend(card);
@@ -187,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
+        if (e.key === "Escape" && modal) {
             modal.classList.remove("active");
         }
     });
@@ -236,20 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     const card = document.createElement("div");
                     card.className = "card";
-
-                    card.innerHTML = `
-                        <img src="/static/uploads/${sticker}" alt="${stickerName}">
-                        <h3>${stickerName}</h3>
-                        <div class="button-group">
-                            <a href="/static/uploads/${sticker}"
-                               download
-                               class="btn download"
-                               onclick="showOrderPopup('${sticker}')">
-                                <i class="fa-solid fa-download"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    `;
+                    card.innerHTML = createCardHTML(sticker, stickerName);
 
                     stickerContainer.appendChild(card);
                 });
