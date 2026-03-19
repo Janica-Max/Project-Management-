@@ -680,95 +680,158 @@ body.dark .upload-box img {
 /* =========================
    CONTACT PLATFORM
 ========================= */
+/* =============================
+   CONTACT ICON ANIMATIONS
+============================= */
 .platform {
-    margin-top: 20px;
-    padding: 56px 20px 24px;
-    background: #000000;
     text-align: center;
+    padding: 50px 20px;
+    background: #000; /* optional black background for contrast */
 }
 
 .platform h3 {
+    color: #fff;
     font-size: 2rem;
-    margin-bottom: 36px;
-    color: #ffffff;
+    margin-bottom: 50px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
 }
 
 .icon-box {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 36px;
+    gap: 60px;
     flex-wrap: wrap;
 }
 
+/* Base icon style */
 .social-icon {
-    width: 78px;
-    height: 78px;
-    transition: 0.3s ease;
+    width: 100px; /* bigger size */
+    height: 100px;
+    filter: grayscale(80%) brightness(0.8); /* slightly muted before hover */
+    transition: all 0.5s ease;
 }
 
-.social-icon:hover {
-    transform: scale(1.12);
+/* Discord: rotate once on hover and stop */
+.icon-box a:nth-child(1) .social-icon:hover {
+    animation: rotateIcon 1.2s ease-in-out forwards; /* rotate once and stay */
+    filter: grayscale(0%) brightness(1.1); /* full color during rotation */
 }
 
+/* Gmail: color flow top-to-bottom */
+.icon-box a:nth-child(2) .social-icon:hover {
+    filter: grayscale(0%) brightness(1);
+    animation: gmailFlow 2s linear infinite;
+}
+
+/* Viber: pop-up full color */
+.icon-box a:nth-child(3) .social-icon:hover {
+    transform: scale(1.4); /* slightly bigger pop */
+    filter: grayscale(0%) brightness(1);
+}
+
+/* =============================
+   KEYFRAMES
+============================= */
+
+/* Rotate animation with a "pause" at the end */
+@keyframes rotateIcon {
+    0% { transform: rotate(0deg); }
+    70% { transform: rotate(360deg); } /* full rotation */
+    100% { transform: rotate(360deg); } /* pause at end for 0.5s - 1s */
+}
+
+/* =============================
+   KEYFRAMES
+============================= */
+
+/* Gmail color flow top-to-bottom */
+@keyframes gmailFlow {
+    0% { filter: brightness(0.8) saturate(1) hue-rotate(0deg); }
+    25% { filter: brightness(1) saturate(1.2) hue-rotate(20deg); }
+    50% { filter: brightness(1.1) saturate(1.4) hue-rotate(40deg); }
+    75% { filter: brightness(1) saturate(1.2) hue-rotate(20deg); }
+    100% { filter: brightness(0.8) saturate(1) hue-rotate(0deg); }
+}
+
+/* Modern dividing line between contact and footer */
 .contact-divider {
-    width: min(1000px, 92%);
-    height: 3px;
-    margin: 42px auto 0;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #ff6ec7, #6c63ff, #00ffe0);
-    box-shadow: 0 0 10px rgba(255, 110, 199, 0.4);
-}
+    height: 3px;            /* thickness of the line */
+    width: 90%;             /* smaller than full width for style */
+    margin: 40px auto;      /* spacing above and below */
+    border-radius: 10px;
 
-/* =========================
-   FOOTER
-========================= */
-footer {
-    background: #000000;
-    color: #ffffff;
-}
+    /* Gradient for a cool modern look */
+    background: linear-gradient(90deg, #FF6EC7, #6C63FF, #00FFE0);
 
+    /* Optional glowing effect */
+    box-shadow: 0 0 8px rgba(255,110,199,0.6),
+                0 0 12px rgba(108,99,255,0.5),
+                0 0 16px rgba(0,255,224,0.4);
+}
+/* =============================
+   FOOTER FLEX DESIGN
+============================= */
 .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 26px 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 30px;
+    padding: 20px 20px;
+    background-color: #000; /* dark background */
+    color: #fff;
+    gap: 10px;
     flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif;
+    margin-top: -50px;
 }
 
-.footer-left,
-.footer-right {
+.footer-left, .footer-right {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 450px;
+    max-width: 45%; /* make sure they stay side by side */
 }
 
-.footer-left h4,
-.footer-right h4 {
-    color: #ffffff;
-    font-size: 1.1rem;
+.footer-left h4, .footer-right h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
 }
 
-.footer-left p,
-.footer-right a {
-    color: #cccccc;
+.footer-left p, .footer-right a {
+    font-size: 1rem;
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .footer-right a:hover {
-    color: #ffffff;
+    color: #FF6EC7; /* highlight on hover */
 }
 
+/* Footer Bottom */
 .footer-bottom {
-    text-align: center;
-    color: #cccccc;
-    padding: 0 20px 22px;
-    font-size: 0.95rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+    background-color: #000;
+    flex-wrap: wrap;
+    padding: 15px 0;
+    font-size: 0.9rem;
 }
 
+/* Responsive */
+@media (max-width: 900px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-left, .footer-right {
+        max-width: 100%;
+    }
+}
 /* =========================
    TSHIRT PAGE
 ========================= */
