@@ -186,9 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     window.showOrderPopup = function (sticker) {
-        selectedSticker = encodeURIComponent(sticker);
-        if (orderPopup) {
-            orderPopup.style.display = "flex";
+    selectedSticker = sticker;
+    if (orderPopup) {
+        orderPopup.style.display = "flex";
         }
     };
 
@@ -199,8 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.goToShirt = function () {
-        if (selectedSticker !== "") {
-            window.location.href = `/tshirt/${selectedSticker}`;
+    if (selectedSticker) {
+        window.location.href = `/tshirt/${encodeURIComponent(selectedSticker)}`;
         }
     };
 
